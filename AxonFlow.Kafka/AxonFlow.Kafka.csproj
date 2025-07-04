@@ -6,8 +6,6 @@
         <Copyright>Copyright Paolo Possanzini</Copyright>
         <Features>strict</Features>
         <PackageTags>mediator;request;response;queries;commands;notifications;rpc;kafka</PackageTags>
-        <!-- <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\Arbitrer.snk</AssemblyOriginatorKeyFile> -->
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <MinVerTagPrefix>v</MinVerTagPrefix>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>

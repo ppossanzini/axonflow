@@ -19,9 +19,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Deterministic>true</Deterministic>
     <LangVersion>10</LangVersion>
-    <SignAssembly>true</SignAssembly>
     <PackageId>AxonFlow</PackageId>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>Logo-128.png</PackageIcon>
   </PropertyGroup>
 
