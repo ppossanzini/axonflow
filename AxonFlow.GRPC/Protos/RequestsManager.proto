@@ -1,0 +1,23 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+package AxonFlow.GRPC;
+
+service GrpcServices{
+  rpc ManageAxonFlowMessage(RequestMessage) returns (MessageResponse);
+  rpc ManageAxonFlowNotification(NotifyMessage) returns (google.protobuf.Empty);
+}
+
+message RequestMessage {
+  string AxonFlowType = 1;
+  string Body = 2;
+}
+
+message MessageResponse {
+  string Body = 1;
+}
+
+message NotifyMessage{
+  string AxonFlowType = 1;
+  string Body = 2;
+}

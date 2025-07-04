@@ -1,0 +1,6 @@
+This project is an open-source fork of MediatR https://github.com/jbogard/MediatR.Archive at version 12.5.0
+
+The original work is authored by Jimmy Bogard.
+The original work was distribuited using Apache License 2.0
+
+This is a derivate work of the original project
