@@ -25,16 +25,16 @@ AxonFlow provides you message dispatching behaviour and let you decide which cal
 
 You should install [AxonFlow with NuGet](https://www.nuget.org/packages/AxonFlow)
 
-    Install-Package AxonFlow
+    Install-Package Axon
 
 if you need out-of-process functions
 
-    Install-Package AxonFlow.Router
+    Install-Package Axon-Flow
     
 Or via the .NET Core command line interface:
 
-    dotnet add package AxonFlow
-    dotnet add package AxonFlow.Router
+    dotnet add package Axon
+    dotnet add package Axon-Flow
 
 Either commands, from Package Manager Console or .NET Core CLI, will download and install AxonFlow and all required dependencies.
 
@@ -45,7 +45,7 @@ To reference only the contracts for AxonFlow, which includes:
 IRequest (including generic variants)
 INotification
 IStreamRequest
-Add a package reference to AxonFlow.Contracts
+Add a package reference to Axon-Contracts
 
 This package is useful in scenarios where your AxonFlow contracts are in a separate assembly/project from handlers. Example scenarios include:
 
@@ -173,13 +173,13 @@ Of course you will have some processes with requests declared **Local** and othe
 ## Installing AxonFlow RabbitMQ extension.
 
 ```
-    Install-Package AxonFlow.RabbitMQ
+    Install-Package Axon-Flow-RabbitMQ
 ```
     
 Or via the .NET Core command line interface:
 
 ```
-    dotnet add package AxonFlow.RabbitMQ
+    dotnet add package Axon-Flow-RabbitMQ
 ```
 
 ## Configuring RabbitMQ Extension. 
@@ -211,13 +211,13 @@ or if you prefer use appsettings configuration
 ## Installing AxonFlow Kafka extension.
 
 ```
-    Install-Package AxonFlow.Kafka
+    Install-Package Axon-Flow-Kafka
 ```
     
 Or via the .NET Core command line interface:
 
 ```
-    dotnet add package AxonFlow.Kafka
+    dotnet add package Axon-Flow-Kafka
 ```
 
 
