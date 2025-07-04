@@ -15,10 +15,10 @@
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <Deterministic>true</Deterministic>
         <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
-        
-        <RepositoryUrl>https://github.com/ppossanzini/arbitrer</RepositoryUrl>
+
+        <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
         <PackageIcon>Logo-128.png</PackageIcon>
-        <PackageId>Axon.Flow.Kafka</PackageId>
+        <PackageId>Axon-Flow-Kafka</PackageId>
     </PropertyGroup>
 
     <ItemGroup>

@@ -18,6 +18,7 @@
     <LangVersion>10</LangVersion>
     <PackageId>Axon-Contracts</PackageId>
     <PackageIcon>Logo-128.png</PackageIcon>
+    <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
   </PropertyGroup>
 
 

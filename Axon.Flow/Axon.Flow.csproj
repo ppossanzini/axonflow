@@ -14,8 +14,8 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Deterministic>true</Deterministic>
     <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
-    <RepositoryUrl>https://github.com/ppossanzini/orchestrator</RepositoryUrl>
-    <PackageId>Axon.Flow</PackageId>
+    <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
+    <PackageId>Axon-Flow</PackageId>
     <RootNamespace>Axon.Flow</RootNamespace>
     <PackageIcon>Logo-128.png</PackageIcon>
   </PropertyGroup>
