@@ -1,4 +1,4 @@
-![Logo.png](assets/Logo.png)
+![Logo.png](assets/logo-250.png)
 
 [![NuGet](https://img.shields.io/nuget/dt/AxonFlow.svg)](https://www.nuget.org/packages/AxonFlow) 
 [![NuGet](https://img.shields.io/nuget/vpre/AxonFlow.svg)](https://www.nuget.org/packages/AxonFlow)
