@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AxonFlow.Wrappers;
+namespace Axon.Wrappers;
 
 using System.Collections.Generic;
 using System.Linq;

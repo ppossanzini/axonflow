@@ -1,4 +1,4 @@
-namespace AxonFlow.Wrappers;
+namespace Axon.Wrappers;
 
 using System;
 using System.Collections.Generic;

@@ -18,7 +18,7 @@
         
         <RepositoryUrl>https://github.com/ppossanzini/arbitrer</RepositoryUrl>
         <PackageIcon>Logo-128.png</PackageIcon>
-        <PackageId>AxonFlow.Kafka</PackageId>
+        <PackageId>Axon.Flow.Kafka</PackageId>
     </PropertyGroup>
 
     <ItemGroup>

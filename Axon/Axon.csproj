@@ -19,7 +19,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Deterministic>true</Deterministic>
     <LangVersion>10</LangVersion>
-    <PackageId>AxonFlow</PackageId>
+    <PackageId>Axon</PackageId>
     <PackageIcon>Logo-128.png</PackageIcon>
   </PropertyGroup>
 
@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AxonFlow.Contracts\AxonFlow.Contracts.csproj" />
+    <ProjectReference Include="..\Axon.Contracts\Axon.Contracts.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\assets\Logo-128.png" Pack="true" PackagePath="" />

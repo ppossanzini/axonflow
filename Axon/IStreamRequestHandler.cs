@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace AxonFlow;
+namespace Axon;
 
 /// <summary>
 /// Defines a handler for a stream request using IAsyncEnumerable as return type.

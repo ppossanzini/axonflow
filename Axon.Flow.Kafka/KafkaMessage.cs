@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Confluent.Kafka;
 
-namespace AxonFlow.Kafka
+namespace Axon.Flow.Kafka
 {
   /// <summary>
   /// Represents a Kafka message with generic type T.

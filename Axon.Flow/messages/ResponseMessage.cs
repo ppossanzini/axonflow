@@ -2,7 +2,7 @@
 
 using System;
 
-namespace AxonFlow.Messages
+namespace Axon.Flow.Messages
 {
   /// <summary>
   /// The ResponseMessage class represents a response message that is returned from various operations.

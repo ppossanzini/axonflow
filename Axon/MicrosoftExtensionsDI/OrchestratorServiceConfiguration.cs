@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using AxonFlow;
-using AxonFlow.Entities;
-using AxonFlow.NotificationPublishers;
-using AxonFlow.Pipeline;
-using AxonFlow.Registration;
+using Axon;
+using Axon.Entities;
+using Axon.NotificationPublishers;
+using Axon.Pipeline;
+using Axon.Registration;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -20,7 +20,7 @@ public class OrchestratorServiceConfiguration
     /// <summary>
     /// Orchestrator implementation type to register. Default is <see cref="Axon"/>
     /// </summary>
-    public Type OrchestratorImplementationType { get; set; } = typeof(AxonFlow.Axon);
+    public Type OrchestratorImplementationType { get; set; } = typeof(Axon.Axon);
 
     /// <summary>
     /// Strategy for publishing notifications. Defaults to <see cref="ForeachAwaitPublisher"/>
@@ -81,7 +81,7 @@ public class OrchestratorServiceConfiguration
     public int MaxTypesClosing { get; set; } = 100;
 
     /// <summary>
-    /// Configure the Maximum Amount of Generic RequestHandler Types AxonFlow will try to register.  To Disable this constraint, set the value to 0.
+    /// Configure the Maximum Amount of Generic RequestHandler Types Axon will try to register.  To Disable this constraint, set the value to 0.
     /// </summary>
     public int MaxGenericTypeRegistrations { get; set; } = 125000;
 
@@ -91,7 +91,7 @@ public class OrchestratorServiceConfiguration
     public int RegistrationTimeout { get; set; } = 15000;
 
     /// <summary>
-    /// Flag that controlls whether AxonFlow will attempt to register handlers that containg generic type parameters.
+    /// Flag that controlls whether Axon will attempt to register handlers that containg generic type parameters.
     /// </summary>
     public bool RegisterGenericHandlers { get; set; } = false;
 

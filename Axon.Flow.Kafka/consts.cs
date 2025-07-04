@@ -1,4 +1,4 @@
-namespace AxonFlow.Router
+namespace Axon.Flow.Kafka
 {
   public class Consts
   {

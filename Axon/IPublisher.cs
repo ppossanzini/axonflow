@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace AxonFlow;
+namespace Axon;
 
 /// <summary>
 /// Publish a notification or event through the orchestrator pipeline to be handled by multiple handlers.

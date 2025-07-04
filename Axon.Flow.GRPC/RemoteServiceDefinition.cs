@@ -1,6 +1,6 @@
 using Grpc.Net.Client;
 
-namespace AxonFlow.GRPC;
+namespace Axon.Flow.GRPC;
 
 public class RemoteServiceDefinition
 {

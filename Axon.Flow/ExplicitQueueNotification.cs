@@ -1,5 +1,5 @@
 
-namespace AxonFlow
+namespace Axon.Flow
 {
   public class ExplicitQueueNotification<T> : IExplicitQueue, INotification
     where T : INotification

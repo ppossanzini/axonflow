@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
-using AxonFlow;
-using AxonFlow.Pipeline;
-using AxonFlow.Registration;
+using Axon;
+using Axon.Pipeline;
+using Axon.Registration;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Extensions to scan for AxonFlow handlers and registers them.
+/// Extensions to scan for Axon handlers and registers them.
 /// - Scans for any handler interface implementations and registers them as <see cref="ServiceLifetime.Transient"/>
 /// - Scans for any <see cref="IRequestPreProcessor{TRequest}"/> and <see cref="IRequestPostProcessor{TRequest,TResponse}"/> implementations and registers them as transient instances
 /// Registers <see cref="IAxon"/> as a transient instance

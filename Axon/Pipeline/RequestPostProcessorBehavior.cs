@@ -1,4 +1,4 @@
-namespace AxonFlow.Pipeline;
+namespace Axon.Pipeline;
 
 using System.Collections.Generic;
 using System.Threading;

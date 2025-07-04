@@ -6,12 +6,13 @@ using Newtonsoft.Json;
 using System.Threading;
 using System;
 using System.Collections.Generic;
-using Axon;
-using Axon.GRPC;
+using Axon.Flow.Messages;
 using Grpc.Net.Client;
+using Microsoft.Extensions.DependencyInjection;
+
 // using OrchestratoR.Router.GRPC;
 
-namespace AxonFlow.GRPC
+namespace Axon.Flow.GRPC
 {
   /// <summary>
   /// Class for dispatching messages to RabbitMQ and handling responses.
@@ -52,7 +53,7 @@ namespace AxonFlow.GRPC
       return DestinationChannels[options.DefaultServiceUri];
     }
 
-    public Dictionary<string, global::Axon.GRPC.GrpcServices.GrpcServicesClient> DestinationClients { get; set; } = new();
+    public Dictionary<string, global::Axon.Flow.GRPC.GrpcServices.GrpcServicesClient> DestinationClients { get; set; } = new();
 
     public GrpcServices.GrpcServicesClient GetClientFor<T>()
     {
@@ -79,7 +80,7 @@ namespace AxonFlow.GRPC
       return true;
     }
 
-    public async Task<Messages.ResponseMessage<TResponse>> Dispatch<TRequest, TResponse>(TRequest request, string queueName = null,
+    public async Task<ResponseMessage<TResponse>> Dispatch<TRequest, TResponse>(TRequest request, string queueName = null,
       CancellationToken cancellationToken = default)
     {
       var message = JsonConvert.SerializeObject(request, options.SerializerSettings);
@@ -90,7 +91,7 @@ namespace AxonFlow.GRPC
         Body = message,
         AxonFlowType = queueName ?? typeof(TRequest).AxonTypeName(routerOptions)
       });
-      return JsonConvert.DeserializeObject<Messages.ResponseMessage<TResponse>>(result.Body, options.SerializerSettings);
+      return JsonConvert.DeserializeObject<ResponseMessage<TResponse>>(result.Body, options.SerializerSettings);
     }
 
     /// <summary>

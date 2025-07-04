@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using AxonFlow.Pipeline;
+using Axon.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace AxonFlow.Registration;
+namespace Axon.Registration;
 
 public static class ServiceRegistrar
 {

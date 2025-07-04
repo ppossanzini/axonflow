@@ -17,7 +17,7 @@
     <PackageIcon>Logo-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/ppossanzini/arbitrer</RepositoryUrl>
 
-    <PackageId>AxonFlow.GRPC</PackageId>
+    <PackageId>Axon.Flow.GRPC</PackageId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.25.2"/>
@@ -33,7 +33,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AxonFlow.Router\AxonFlow.Router.csproj"/>
+    <ProjectReference Include="..\Axon.Flow\Axon.Flow.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Protobuf Include="Protos\RequestsManager.proto" GrpcServices="Both"/>

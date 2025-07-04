@@ -11,11 +11,12 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
-using Constants = Axon.RabbitMQ.Constants;
+using Constants = Axon.Flow.RabbitMQ.Constants;
 
-namespace AxonFlow.RabbitMQ
+namespace Axon.Flow.RabbitMQ
 {
   /// <summary>
   /// Class for dispatching messages to RabbitMQ and handling responses.

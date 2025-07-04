@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace AxonFlow;
+namespace Axon;
 
 public interface INotificationPublisher
 {

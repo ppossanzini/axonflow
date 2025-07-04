@@ -15,9 +15,9 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Constants = Axon.RabbitMQ.Constants;
+using Constants = Axon.Flow.RabbitMQ.Constants;
 
-namespace AxonFlow.RabbitMQ
+namespace Axon.Flow.RabbitMQ
 {
   /// <summary>
   /// The RequestsManager class is responsible for managing requests and notifications in a distributed system. It implements the IHostedService interface.

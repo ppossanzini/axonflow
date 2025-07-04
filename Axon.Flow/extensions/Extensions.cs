@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Axon;
+using Axon.Flow;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -13,7 +15,7 @@ using Microsoft.Extensions.Primitives;
 
 // ReSharper disable AssignNullToNotNullAttribute
 
-namespace AxonFlow
+namespace Microsoft.Extensions.DependencyInjection
 {
   /// <summary>
   /// Extension methods for configuring and using Axon.Router in an ASP.NET Core application.
@@ -32,8 +34,8 @@ namespace AxonFlow
     {
       if (configure != null)
         services.Configure<RouterOptions>(configure);
-      services.AddScoped(typeof(IPipelineBehavior<,>), typeof(Pipelines.RouterPipeline<,>));
-      services.AddSingleton<IRouter, global::Axon.Router>();
+      services.AddScoped(typeof(IPipelineBehavior<,>), typeof(Axon.Flow.Pipelines.RouterPipeline<,>));
+      services.AddSingleton<IRouter, global::Axon.Flow.Router>();
 
       services.AddTransient<global::Axon.IAxon, AxonFlow>();
       return services;

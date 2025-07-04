@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AxonFlow.Internal;
+namespace Axon.Internal;
 
 internal class ObjectDetails : IComparer<ObjectDetails>
 {

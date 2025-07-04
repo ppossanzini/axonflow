@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AxonFlow.Wrappers;
+namespace Axon.Wrappers;
 
 public abstract class RequestHandlerBase
 {

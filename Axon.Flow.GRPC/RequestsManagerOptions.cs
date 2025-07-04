@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AxonFlow.GRPC;
+namespace Axon.Flow.GRPC;
 
 public class RequestsManagerOptions
 {

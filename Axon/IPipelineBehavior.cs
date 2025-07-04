@@ -1,5 +1,5 @@
 
-namespace AxonFlow;
+namespace Axon;
 
 using System.Threading;
 using System.Threading.Tasks;

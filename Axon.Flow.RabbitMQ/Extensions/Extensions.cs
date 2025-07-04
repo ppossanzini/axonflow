@@ -4,10 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using Axon.RabbitMQ;
+using Axon;
+using Axon.Flow;
+using Axon.Flow.RabbitMQ;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AxonFlow
+namespace Microsoft.Extensions.DependencyInjection
 {
   /// <summary>
   /// Provides extension methods for various classes.
@@ -24,7 +26,7 @@ namespace AxonFlow
       Action<MessageDispatcherOptions> config)
     {
       services.Configure<MessageDispatcherOptions>(config);
-      services.AddKeyedSingleton<IExternalMessageDispatcher, MessageDispatcher>(global::Axon.Router.RouterKeyServicesName);
+      services.AddKeyedSingleton<IExternalMessageDispatcher, MessageDispatcher>(global::Axon.Flow.Router.RouterKeyServicesName);
       return services;
     }
 

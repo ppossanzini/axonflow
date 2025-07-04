@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Axon;
 
-namespace AxonFlow
+namespace Axon.Flow
 {
   public interface IRouter
   {

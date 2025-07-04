@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace AxonFlow.RabbitMQ
+namespace Axon.Flow.RabbitMQ
 {
   /// <summary>
   /// Represents the options for configuring the message dispatcher.

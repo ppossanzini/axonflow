@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Axon;
 using Microsoft.Extensions.Logging;
 
-namespace AxonFlow.Pipelines
+namespace Axon.Flow.Pipelines
 {
   /// <summary>
   /// Represents a pipeline behavior that integrates with an arbitrator for handling requests of type <typeparamref name="TRequest"/> and producing responses of type <typeparamref name

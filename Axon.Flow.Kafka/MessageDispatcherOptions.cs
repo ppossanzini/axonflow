@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using Confluent.Kafka;
 using Newtonsoft.Json;
 
-namespace AxonFlow.Kafka
+namespace Axon.Flow.Kafka
 {
   /// <summary>
   /// Represents the options for the <see cref="MessageDispatcher"/>.

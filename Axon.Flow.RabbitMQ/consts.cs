@@ -1,4 +1,4 @@
-namespace AxonFlow.RabbitMQ
+namespace Axon.Flow.RabbitMQ
 {
   public static class Constants
   {

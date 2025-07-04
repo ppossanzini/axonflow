@@ -1,6 +1,6 @@
 using System;
 
-namespace AxonFlow
+namespace Axon.Flow
 {
   public class InvalidHandlerException : Exception
   {

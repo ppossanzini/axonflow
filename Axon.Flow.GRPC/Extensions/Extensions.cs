@@ -5,14 +5,15 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using Axon;
-using Axon.GRPC;
+using Axon.Flow.GRPC;
+using Axon.Flow;
 using Grpc.AspNetCore.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AxonFlow.GRPC
+namespace Microsoft.Extensions.DependencyInjection
 {
   public static class Extensions
   {

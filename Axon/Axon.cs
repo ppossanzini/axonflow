@@ -1,6 +1,6 @@
-using AxonFlow.NotificationPublishers;
+using Axon.NotificationPublishers;
 
-namespace AxonFlow;
+namespace Axon;
 
 using System;
 using System.Collections.Concurrent;

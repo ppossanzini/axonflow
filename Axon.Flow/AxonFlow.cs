@@ -7,7 +7,7 @@ using Axon;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace AxonFlow
+namespace Axon.Flow
 {
   /// OrchestratorGateway class is a subclass of Orchestrator that adds additional functionality for remote request arbitration.
   /// /

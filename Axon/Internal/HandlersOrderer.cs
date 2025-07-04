@@ -1,4 +1,4 @@
-namespace AxonFlow.Internal;
+namespace Axon.Internal;
 
 using System;
 using System.Collections.Generic;

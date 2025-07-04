@@ -4,13 +4,15 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using Axon;
+using Axon.Flow;
 using Confluent.Kafka;
 using Confluent.Kafka.Admin;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using  Axon.Kafka;
+using Axon.Flow.Kafka;
 
-namespace AxonFlow
+namespace Microsoft.Extensions.DependencyInjection
 {
   public static class Extensions
   {
@@ -37,8 +39,8 @@ namespace AxonFlow
       services.AddHostedService<RequestsManager>();
       return services;
     }
-    
-    
+
+
     public static MessageDispatcherOptions DispatchOnlyTo(this MessageDispatcherOptions options,
       Func<IEnumerable<Assembly>> assemblySelect)
     {

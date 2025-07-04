@@ -1,4 +1,4 @@
-namespace AxonFlow.Pipeline;
+namespace Axon.Pipeline;
 
 using Internal;
 using Microsoft.Extensions.DependencyInjection;

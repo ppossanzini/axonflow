@@ -1,5 +1,5 @@
 ﻿
-namespace AxonFlow;
+namespace Axon;
 
 using System.Collections.Generic;
 using System.Threading;

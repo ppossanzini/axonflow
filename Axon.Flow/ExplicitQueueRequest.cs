@@ -1,5 +1,5 @@
 
-namespace AxonFlow
+namespace Axon.Flow
 {
   public class ExplicitQueueRequest<T> : IRequest, IExplicitQueue where T : IRequest
   {

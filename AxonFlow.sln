@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AxonFlow.Router", "AxonFlow.Router\AxonFlow.Router.csproj", "{E1E567F0-1BDF-4DE9-86F8-12E6CAFEE1E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axon.Flow", "Axon.Flow\Axon.Flow.csproj", "{E1E567F0-1BDF-4DE9-86F8-12E6CAFEE1E7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AxonFlow.RabbitMQ", "AxonFlow.RabbitMQ\AxonFlow.RabbitMQ.csproj", "{7BC4AE47-FEB5-4404-B027-A30FAF581833}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axon.Flow.RabbitMQ", "Axon.Flow.RabbitMQ\Axon.Flow.RabbitMQ.csproj", "{7BC4AE47-FEB5-4404-B027-A30FAF581833}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AxonFlow.Kafka", "AxonFlow.Kafka\AxonFlow.Kafka.csproj", "{52E67D98-DE21-4434-AB34-5FF4FB70C5E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axon.Flow.Kafka", "Axon.Flow.Kafka\Axon.Flow.Kafka.csproj", "{52E67D98-DE21-4434-AB34-5FF4FB70C5E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AxonFlow.GRPC", "AxonFlow.GRPC\AxonFlow.GRPC.csproj", "{26449499-FBBC-4A2A-AE93-EB97A354BAA6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axon.Flow.GRPC", "Axon.Flow.GRPC\Axon.Flow.GRPC.csproj", "{26449499-FBBC-4A2A-AE93-EB97A354BAA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AxonFlow", "AxonFlow\AxonFlow.csproj", "{4C29D2BC-59D9-4F8B-BC4E-F9757817204D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axon", "Axon\Axon.csproj", "{4C29D2BC-59D9-4F8B-BC4E-F9757817204D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AxonFlow.Contracts", "AxonFlow.Contracts\AxonFlow.Contracts.csproj", "{D25BF42A-EBFB-43E0-B7E2-6CE37EEF782D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axon.Contracts", "Axon.Contracts\Axon.Contracts.csproj", "{D25BF42A-EBFB-43E0-B7E2-6CE37EEF782D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

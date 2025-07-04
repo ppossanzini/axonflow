@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Grpc.Net.Client;
 using Newtonsoft.Json;
 
-namespace AxonFlow.GRPC
+namespace Axon.Flow.GRPC
 {
   public class MessageDispatcherOptions
   {

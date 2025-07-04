@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AxonFlow;
+namespace Axon;
 
 /// <summary>
 /// Send a request through the orchestrator pipeline to be handled by a single handler.

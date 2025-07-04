@@ -1,6 +1,6 @@
 using System;
 
-namespace AxonFlow
+namespace Axon.Flow
 {
   [AttributeUsage(AttributeTargets.Class)]
   public class RouterQueueTimeoutAttribute : System.Attribute

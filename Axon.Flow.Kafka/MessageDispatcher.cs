@@ -1,4 +1,3 @@
-
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -10,12 +9,14 @@ using admin = Confluent.Kafka.Admin;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
-using  Axon.Messages;
+using Axon.Flow.Messages;
 using System.Threading;
 using Axon;
-using Axon.Router;
+using Axon.Flow;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace AxonFlow.Kafka
+
+namespace Axon.Flow.Kafka
 {
   /// <summary>
   /// Represents a MessageDispatcher class that is responsible for dispatching and handling messages using Kafka.

@@ -1,4 +1,4 @@
-namespace AxonFlow;
+namespace Axon;
 
 /// <summary>
 /// Marker interface to represent a notification

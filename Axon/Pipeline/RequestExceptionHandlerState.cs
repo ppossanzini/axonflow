@@ -1,4 +1,4 @@
-namespace AxonFlow.Pipeline;
+namespace Axon.Pipeline;
 
 /// <summary>
 /// Represents the result of handling an exception thrown by a request handler

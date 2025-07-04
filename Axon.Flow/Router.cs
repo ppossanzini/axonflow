@@ -8,9 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
-using Axon.Messages;
+using Axon.Flow.Messages;
 
-namespace AxonFlow
+namespace Axon.Flow
 {
   /// <summary>
   /// Represents an arbitrator that handles message routing and dispatching.

@@ -17,7 +17,7 @@
     <PackageIcon>Logo-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/ppossanzini/arbitrer</RepositoryUrl>
     
-    <PackageId>AxonFlow.RabbitMQ</PackageId>
+    <PackageId>Axon.Flow.RabbitMQ</PackageId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="RabbitMQ.Client" Version="7.0.0" />

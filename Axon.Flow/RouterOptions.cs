@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Axon;
 
-namespace AxonFlow
+namespace Axon.Flow
 {
   public class RouterOptions
   {

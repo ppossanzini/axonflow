@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AxonFlow.NotificationPublishers;
+namespace Axon.NotificationPublishers;
 
 /// <summary>
 /// Awaits each notification handler in a single foreach loop:

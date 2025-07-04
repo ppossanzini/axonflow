@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AxonFlow;
+namespace Axon;
 
 /// <summary>
 /// Defines a handler for a notification

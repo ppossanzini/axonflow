@@ -14,7 +14,7 @@ using Confluent.Kafka.Admin;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace AxonFlow.Kafka
+namespace Axon.Flow.Kafka
 {
   /// <summary>
   /// Represents a class that manages requests and notifications using Kafka.

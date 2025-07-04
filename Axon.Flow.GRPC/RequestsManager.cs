@@ -7,8 +7,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Axon;
-using Axon.GRPC;
-
+using Axon.Flow.GRPC;
+using Axon.Flow;
+using Axon.Flow.Messages;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,9 +18,9 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Type = System.Type;
 
-namespace AxonFlow.GRPC
+namespace Axon.Flow.GRPC
 {
-  public class RequestsManager : global::Axon.GRPC.GrpcServices.GrpcServicesBase
+  public class RequestsManager : global::Axon.Flow.GRPC.GrpcServices.GrpcServicesBase
   {
     private readonly ILogger<RequestsManager> _logger;
     private readonly IServiceProvider _provider;
@@ -90,17 +91,17 @@ namespace AxonFlow.GRPC
 
         var orchestrator = _provider.CreateScope().ServiceProvider.GetRequiredService<IAxon>();
         var response = await orchestrator.Send(message);
-        responseMsg = JsonConvert.SerializeObject(new Messages.ResponseMessage { Content = response, Status = Messages.StatusEnum.Ok },
+        responseMsg = JsonConvert.SerializeObject(new ResponseMessage { Content = response, Status = StatusEnum.Ok },
           _options.SerializerSettings);
         _logger.LogDebug("Elaborating sending response : {0}", responseMsg);
       }
       catch (Exception ex)
       {
-        responseMsg = JsonConvert.SerializeObject(new Messages.ResponseMessage
+        responseMsg = JsonConvert.SerializeObject(new ResponseMessage
           {
             Exception = ex,
             OriginaStackTrace = ex.StackTrace?.ToString(),
-            Status = Messages.StatusEnum.Exception, Content = Unit.Value
+            Status = StatusEnum.Exception, Content = Unit.Value
           },
           _options.SerializerSettings);
         _logger.LogError(ex, $"Error executing message of type {typeof(T)} from external service");
@@ -112,7 +113,7 @@ namespace AxonFlow.GRPC
     private async Task ManageGenericAxonFlowNotification<T>(NotifyMessage request)
     {
       var axon = _provider.CreateScope().ServiceProvider.GetRequiredService<IAxon>();
-      var router = axon as AxonFlow;
+      var router = axon as global::Axon.Flow.AxonFlow;
       try
       {
         var msg = request.Body;
