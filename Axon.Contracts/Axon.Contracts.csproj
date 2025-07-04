@@ -16,7 +16,6 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Deterministic>true</Deterministic>
-    <Version>2.0.1</Version>
     <RootNamespace>Axon</RootNamespace>
     <LangVersion>10</LangVersion>
     <PackageId>Axon.Contracts</PackageId>
