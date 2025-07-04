@@ -4,11 +4,9 @@
     <Nullable>enable</Nullable>
     <Authors>Paolo Possanzini</Authors>
     <Description>Contracts package for requests, responses, and notifications</Description>
-    <Copyright>Copyright Jimmy Bogard</Copyright>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Features>strict</Features>
     <PackageTags>mediator;request;response;queries;commands;notifications</PackageTags>
-    <SignAssembly>true</SignAssembly>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -18,7 +16,7 @@
     <Deterministic>true</Deterministic>
     <RootNamespace>Axon</RootNamespace>
     <LangVersion>10</LangVersion>
-    <PackageId>Axon.Contracts</PackageId>
+    <PackageId>Axon-Contracts</PackageId>
     <PackageIcon>Logo-128.png</PackageIcon>
   </PropertyGroup>
 
