@@ -25,16 +25,16 @@ AxonFlow provides you message dispatching behaviour and let you decide which cal
 
 You should install [AxonFlow with NuGet](https://www.nuget.org/packages/AxonFlow)
 
-    Install-Package Axon
+    Install-Package AxonFlow
 
 if you need out-of-process functions
 
-    Install-Package Axon-Flow
+    Install-Package AxonFlow.Flow
     
 Or via the .NET Core command line interface:
 
-    dotnet add package Axon
-    dotnet add package Axon-Flow
+    dotnet add package AxonFlow
+    dotnet add package AxonFlow.Flow
 
 Either commands, from Package Manager Console or .NET Core CLI, will download and install AxonFlow and all required dependencies.
 
@@ -173,13 +173,13 @@ Of course you will have some processes with requests declared **Local** and othe
 ## Installing AxonFlow RabbitMQ extension.
 
 ```
-    Install-Package Axon-Flow-RabbitMQ
+    Install-Package AxonFlow.Flow.RabbitMQ
 ```
     
 Or via the .NET Core command line interface:
 
 ```
-    dotnet add package Axon-Flow-RabbitMQ
+    dotnet add package AxonFlow.Flow.RabbitMQ
 ```
 
 ## Configuring RabbitMQ Extension. 
@@ -211,13 +211,13 @@ or if you prefer use appsettings configuration
 ## Installing AxonFlow Kafka extension.
 
 ```
-    Install-Package Axon-Flow-Kafka
+    Install-Package AxonFlow.Flow.Kafka
 ```
     
 Or via the .NET Core command line interface:
 
 ```
-    dotnet add package Axon-Flow-Kafka
+    dotnet add package AxonFlow.Flow.Kafka
 ```
 
 
