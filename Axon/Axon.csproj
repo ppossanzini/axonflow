@@ -16,7 +16,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Deterministic>true</Deterministic>
     <LangVersion>10</LangVersion>
-    <PackageId>Axon</PackageId>
+    <PackageId>AxonFlow</PackageId>
     <PackageIcon>Logo-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
   </PropertyGroup>

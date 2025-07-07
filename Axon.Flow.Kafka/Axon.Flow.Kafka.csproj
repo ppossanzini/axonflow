@@ -18,7 +18,7 @@
 
         <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
         <PackageIcon>Logo-128.png</PackageIcon>
-        <PackageId>Axon-Flow-Kafka</PackageId>
+        <PackageId>AxonFlow.Flow.Kafka</PackageId>
     </PropertyGroup>
 
     <ItemGroup>

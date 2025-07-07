@@ -16,7 +16,7 @@
     <Deterministic>true</Deterministic>
     <RootNamespace>Axon</RootNamespace>
     <LangVersion>10</LangVersion>
-    <PackageId>Axon-Contracts</PackageId>
+    <PackageId>AxonFlow.Contracts</PackageId>
     <PackageIcon>Logo-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
   </PropertyGroup>

@@ -17,7 +17,7 @@
     <PackageIcon>Logo-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
 
-    <PackageId>Axon-Flow-GRPC</PackageId>
+    <PackageId>AxonFlow.Flow.GRPC</PackageId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.25.2"/>

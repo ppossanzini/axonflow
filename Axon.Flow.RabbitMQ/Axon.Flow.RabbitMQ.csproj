@@ -17,7 +17,7 @@
     <PackageIcon>Logo-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
     
-    <PackageId>Axon-Flow-RabbitMQ</PackageId>
+    <PackageId>AxonFlow.Flow.RabbitMQ</PackageId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="RabbitMQ.Client" Version="7.0.0" />
