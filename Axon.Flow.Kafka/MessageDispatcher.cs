@@ -37,7 +37,7 @@ namespace Axon.Flow.Kafka
 
     public MessageDispatcher(IOptions<MessageDispatcherOptions> options, ILogger<MessageDispatcher> logger, IServiceProvider provider,
       IOptions<RouterOptions> axonflowOptions)
-    {
+    { 
       this._options = options.Value;
       this._logger = logger;
       _provider = provider;

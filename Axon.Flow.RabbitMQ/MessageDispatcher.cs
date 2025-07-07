@@ -25,7 +25,7 @@ namespace Axon.Flow.RabbitMQ
   {
     /// <summary>
     /// Represents the options for the message dispatcher.
-    /// </summary>
+    /// </summary> 
     private readonly MessageDispatcherOptions options;
 
     /// <summary>
