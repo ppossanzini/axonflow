@@ -1,18 +1,13 @@
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System.Text;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using Confluent.Kafka;
-using admin = Confluent.Kafka.Admin;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using Axon.Flow.Messages;
 using System.Threading;
-using Axon;
-using Axon.Flow;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -134,7 +129,7 @@ namespace Axon.Flow.Kafka
         topic: queueName ?? typeof(TRequest).AxonTypeName(_axonflowOptions),
         message: new Message<Null, string> { Value = message }, cancellationToken);
 
-      cancellationToken.Register(() => _callbackMapper.TryRemove(correlationId, out var tmp));
+      cancellationToken.Register(() => _callbackMapper.TryRemove(correlationId, out var _));
       var result = await tcs.Task;
 
       var response = JsonConvert.DeserializeObject<KafkaReply<ResponseMessage<TResponse>>>(result, this._options.SerializerSettings);

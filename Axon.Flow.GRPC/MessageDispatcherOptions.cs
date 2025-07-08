@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Grpc.Net.Client;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Axon.Flow.GRPC
 {
@@ -40,14 +41,14 @@ namespace Axon.Flow.GRPC
 
     public MessageDispatcherOptions()
     {
-      SerializerSettings = new JsonSerializerSettings()
+      SerializerSettings = new JsonSerializerSettings
       {
-        MissingMemberHandling = Newtonsoft.Json.MissingMemberHandling.Ignore,
-        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
-        DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
-        DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc
+        MissingMemberHandling = MissingMemberHandling.Ignore,
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+        DateFormatHandling = DateFormatHandling.IsoDateFormat,
+        DateTimeZoneHandling = DateTimeZoneHandling.Utc
       };
-      SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+      SerializerSettings.Converters.Add(new StringEnumConverter());
     }
   }
 }

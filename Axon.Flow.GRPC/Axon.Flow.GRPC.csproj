@@ -18,6 +18,8 @@
     <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
 
     <PackageId>AxonFlow.Flow.GRPC</PackageId>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\AxonFlow.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.25.2"/>

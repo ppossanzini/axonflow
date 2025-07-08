@@ -16,7 +16,7 @@ public static class ServiceRegistrar
   private static int MaxGenericTypeRegistrations;
   private static int RegistrationTimeout;
 
-  public static void SetGenericRequestHandlerRegistrationLimitations(OrchestratorServiceConfiguration configuration)
+  public static void SetGenericRequestHandlerRegistrationLimitations(AxonServiceConfiguration configuration)
   {
     MaxGenericTypeParameters = configuration.MaxGenericTypeParameters;
     MaxTypesClosing = configuration.MaxTypesClosing;
@@ -25,11 +25,11 @@ public static class ServiceRegistrar
   }
 
   [Obsolete("Use AddAxonClassesWithTimeout instead", false)]
-  public static void AddMediatRClassesWithTimeout(IServiceCollection services, OrchestratorServiceConfiguration configuration)
+  public static void AddMediatRClassesWithTimeout(IServiceCollection services, AxonServiceConfiguration configuration)
   {
     AddAxonClassesWithTimeout(services, configuration); 
   }
-  public static void AddAxonClassesWithTimeout(IServiceCollection services, OrchestratorServiceConfiguration configuration)
+  public static void AddAxonClassesWithTimeout(IServiceCollection services, AxonServiceConfiguration configuration)
   {
     using (var cts = new CancellationTokenSource(RegistrationTimeout))
     {
@@ -45,13 +45,13 @@ public static class ServiceRegistrar
   }
 
   [Obsolete("Use AddAxonClasses instead", false)]
-  public static void AddMediatRClasses(IServiceCollection services, OrchestratorServiceConfiguration configuration,
+  public static void AddMediatRClasses(IServiceCollection services, AxonServiceConfiguration configuration,
     CancellationToken cancellationToken = default)
   {
     AddAxonClasses(services, configuration, cancellationToken);
   }
 
-  public static void AddAxonClasses(IServiceCollection services, OrchestratorServiceConfiguration configuration, CancellationToken cancellationToken = default)
+  public static void AddAxonClasses(IServiceCollection services, AxonServiceConfiguration configuration, CancellationToken cancellationToken = default)
   {
     var assembliesToScan = configuration.AssembliesToRegister.Distinct().ToArray();
 
@@ -104,7 +104,7 @@ public static class ServiceRegistrar
     IServiceCollection services,
     IEnumerable<Assembly> assembliesToScan,
     bool addIfAlreadyExists,
-    OrchestratorServiceConfiguration configuration,
+    AxonServiceConfiguration configuration,
     CancellationToken cancellationToken = default)
   {
     var concretions = new List<Type>();
@@ -401,7 +401,7 @@ public static class ServiceRegistrar
     list.Add(value);
   }
 
-  public static void AddRequiredServices(IServiceCollection services, OrchestratorServiceConfiguration serviceConfiguration)
+  public static void AddRequiredServices(IServiceCollection services, AxonServiceConfiguration serviceConfiguration)
   {
     // Use TryAdd, so any existing ServiceFactory/IOrchestrator registration doesn't get overridden
     services.TryAdd(new ServiceDescriptor(typeof(IAxon), serviceConfiguration.OrchestratorImplementationType, serviceConfiguration.Lifetime));

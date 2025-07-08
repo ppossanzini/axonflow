@@ -24,9 +24,9 @@ public static class ServiceCollectionExtensions
     /// <param name="configuration">The action used to configure the options</param>
     /// <returns>Service collection</returns>
     public static IServiceCollection AddAxon(this IServiceCollection services, 
-        Action<OrchestratorServiceConfiguration> configuration)
+        Action<AxonServiceConfiguration> configuration)
     {
-        var serviceConfig = new OrchestratorServiceConfiguration();
+        var serviceConfig = new AxonServiceConfiguration();
 
         configuration.Invoke(serviceConfig);
 
@@ -40,7 +40,7 @@ public static class ServiceCollectionExtensions
     /// <param name="configuration">Configuration options</param>
     /// <returns>Service collection</returns>
     public static IServiceCollection AddAxon(this IServiceCollection services, 
-        OrchestratorServiceConfiguration configuration)
+        AxonServiceConfiguration configuration)
     {
         if (!configuration.AssembliesToRegister.Any())
         {

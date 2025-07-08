@@ -7,7 +7,6 @@ using System.Text;
 using Axon;
 using Axon.Flow;
 using Axon.Flow.RabbitMQ;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

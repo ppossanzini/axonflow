@@ -1,13 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Axon;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,7 +12,6 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Constants = Axon.Flow.RabbitMQ.Constants;
 
 namespace Axon.Flow.RabbitMQ
 {
@@ -45,19 +41,15 @@ namespace Axon.Flow.RabbitMQ
     /// <summary>
     /// Represents a private instance of an IConnection object.
     /// </summary>
-    private IConnection _connection = null;
+    private IConnection _connection;
 
     /// <summary>
     /// Represents the channel used for communication.
     /// </summary>
-    private IChannel _channel = null;
+    private IChannel _channel;
 
     private Dictionary<Type, AsyncEventingBasicConsumer> _consumers = new Dictionary<Type, AsyncEventingBasicConsumer>();
 
-    /// <summary>
-    /// Represents a SHA256 hash algorithm instance used for hashing data.
-    /// </summary>
-    private readonly SHA256 _hasher = SHA256.Create();
 
     /// <summary>
     /// Represents the options for the message dispatcher.
@@ -221,7 +213,7 @@ namespace Axon.Flow.RabbitMQ
     /// <typeparam name="T">The type of messages to be consumed</typeparam> <param name="sender">The object that triggered the event</param> <param name="ea">The event arguments containing the consumed message</param>
     /// <returns>A Task representing the asynchronous operation</returns>
     /// /
-    private async Task ConsumeChannelNotification<T>(object sender, BasicDeliverEventArgs ea)
+    private async Task ConsumeChannelNotification<T>(object _, BasicDeliverEventArgs ea)
     {
       var axon = _provider.CreateScope().ServiceProvider.GetRequiredService<IAxon>();
       var axonFlow = axon as AxonFlow;
@@ -258,7 +250,7 @@ namespace Axon.Flow.RabbitMQ
     /// specified reply-to queue. If an exception occurs during processing, an error response
     /// message will be published.
     /// </remarks>
-    private async Task ConsumeChannelMessage<T>(object sender, BasicDeliverEventArgs ea)
+    private async Task ConsumeChannelMessage<T>(object _, BasicDeliverEventArgs ea)
     {
       string responseMsg = null;
       var replyProps = new BasicProperties();
@@ -301,7 +293,7 @@ namespace Axon.Flow.RabbitMQ
     /// </summary>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> used to cancel the operation.</param>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-    public async Task StopAsync(CancellationToken cancellationToken)
+    public Task StopAsync(CancellationToken cancellationToken)
     {
       try
       {
@@ -309,6 +301,7 @@ namespace Axon.Flow.RabbitMQ
       }
       catch
       {
+        // ignored
       }
 
       try
@@ -317,7 +310,9 @@ namespace Axon.Flow.RabbitMQ
       }
       catch
       {
+        // ignored
       }
+      return Task.CompletedTask;
     }
   }
 }

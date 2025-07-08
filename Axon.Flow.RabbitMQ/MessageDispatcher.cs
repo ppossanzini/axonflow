@@ -8,13 +8,9 @@ using System.Threading;
 using System.Text;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Security.Cryptography;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
-using Constants = Axon.Flow.RabbitMQ.Constants;
+
 
 namespace Axon.Flow.RabbitMQ
 {
@@ -26,40 +22,39 @@ namespace Axon.Flow.RabbitMQ
     /// <summary>
     /// Represents the options for the message dispatcher.
     /// </summary> 
-    private readonly MessageDispatcherOptions options;
+    private readonly MessageDispatcherOptions _options;
 
     /// <summary>
     /// The logger for the MessageDispatcher class.
     /// </summary>
-    /// <typeparam name="MessageDispatcher">The type of the class that the logger is associated with.</typeparam>
-    private readonly ILogger<MessageDispatcher> logger;
+    private readonly ILogger<MessageDispatcher> _logger;
 
-    private readonly RouterOptions routerOptions;
+    private readonly RouterOptions _routerOptions;
 
     /// <summary>
     /// Stores an instance of an object that implements the IConnection interface.
     /// </summary>
-    private IConnection _connection = null;
+    private IConnection _connection ;
 
     /// <summary>
     /// The channel used for sending messages.
     /// </summary>
-    private IChannel _sendChannel = null;
+    private IChannel _sendChannel ;
 
     /// <summary>
     /// Represents the name of the reply queue.
     /// </summary>
-    private string _replyQueueName = null;
+    private string _replyQueueName ;
 
     /// <summary>
     /// Represents an asynchronous event-based consumer for sending messages.
     /// </summary>
-    private AsyncEventingBasicConsumer _sendConsumer = null;
+    private AsyncEventingBasicConsumer _sendConsumer ;
 
     /// <summary>
     /// The unique identifier of the consumer.
     /// </summary>
-    private string _consumerId = null;
+    private string _consumerId ;
 
     /// <summary>
     /// Dictionary that maps callback strings to TaskCompletionSource objects.
@@ -70,14 +65,15 @@ namespace Axon.Flow.RabbitMQ
 
     /// <summary>
     /// Constructor for the MessageDispatcher class. </summary> <param name="options">The options for the MessageDispatcher.</param> <param name="logger">The logger for the MessageDispatcher.</param>
+    /// <param name="routerOptions"></param>
     /// /
     public MessageDispatcher(
       IOptions<MessageDispatcherOptions> options,
       ILogger<MessageDispatcher> logger, IOptions<RouterOptions> routerOptions)
     {
-      this.options = options.Value;
-      this.logger = logger;
-      this.routerOptions = routerOptions.Value;
+      this._options = options.Value;
+      this._logger = logger;
+      this._routerOptions = routerOptions.Value;
 
       this.InitConnection().Wait();
     }
@@ -89,16 +85,16 @@ namespace Axon.Flow.RabbitMQ
       // Ensuring we have a connection object
       if (_connection == null)
       {
-        logger.LogInformation($"Creating RabbitMQ Connection to '{options.HostName}'...");
+        _logger.LogInformation($"Creating RabbitMQ Connection to '{_options.HostName}'...");
         var factory = new ConnectionFactory
         {
-          HostName = options.HostName,
-          UserName = options.UserName,
-          Password = options.Password,
-          VirtualHost = options.VirtualHost,
-          Port = options.Port,
-          ClientProvidedName = options.ClientName,
-          MaxInboundMessageBodySize = options.MaxMessageSize
+          HostName = _options.HostName,
+          UserName = _options.UserName,
+          Password = _options.Password,
+          VirtualHost = _options.VirtualHost,
+          Port = _options.Port,
+          ClientProvidedName = _options.ClientName,
+          MaxInboundMessageBodySize = _options.MaxMessageSize
         };
 
         factory.AutomaticRecoveryEnabled = true;
@@ -112,10 +108,10 @@ namespace Axon.Flow.RabbitMQ
       await _sendChannel.ExchangeDeclareAsync(Constants.RouterExchangeName, ExchangeType.Topic);
       // _channel.ConfirmSelect();
 
-      var queueName = $"{options.QueueName}.{Process.GetCurrentProcess().Id}.{DateTime.Now.Ticks}";
+      var queueName = $"{_options.QueueName}.{Process.GetCurrentProcess().Id}.{DateTime.Now.Ticks}";
       _replyQueueName = (await _sendChannel.QueueDeclareAsync(queue: queueName)).QueueName;
       _sendConsumer = new AsyncEventingBasicConsumer(_sendChannel);
-      _sendConsumer.ReceivedAsync += (s, ea) =>
+      _sendConsumer.ReceivedAsync += (_, ea) =>
       {
         TaskCompletionSource<string> tcs = null;
         try
@@ -130,32 +126,32 @@ namespace Axon.Flow.RabbitMQ
         }
         catch (Exception ex)
         {
-          logger.LogError($"Error deserializing response: {ex.Message}", ex);
+          _logger.LogError($"Error deserializing response: {ex.Message}", ex);
           tcs?.TrySetException(ex);
         }
 
         return Task.CompletedTask;
       };
 
-      _sendChannel.BasicReturnAsync += (s, ea) =>
+      _sendChannel.BasicReturnAsync += (_, ea) =>
       {
         if (!_callbackMapper.TryRemove(ea.BasicProperties.CorrelationId ?? "", out var tcs)) return Task.CompletedTask;
         tcs.TrySetException(new Exception($"Unable to deliver required action: {ea.RoutingKey}"));
         return Task.CompletedTask;
       };
 
-      await _sendChannel.BasicQosAsync(0, Math.Max(options.PerConsumerQos, (ushort)1), false);
+      await _sendChannel.BasicQosAsync(0, Math.Max(_options.PerConsumerQos, (ushort)1), false);
       this._consumerId = await _sendChannel.BasicConsumeAsync(queue: _replyQueueName, autoAck: true, consumer: _sendConsumer);
     }
 
 
     public bool CanDispatch<TRequest>()
     {
-      if (options.DispatchOnly.Count > 0)
-        return options.DispatchOnly.Contains(typeof(TRequest));
+      if (_options.DispatchOnly.Count > 0)
+        return _options.DispatchOnly.Contains(typeof(TRequest));
 
-      if (options.DontDispatch.Count > 0)
-        return !options.DontDispatch.Contains(typeof(TRequest));
+      if (_options.DontDispatch.Count > 0)
+        return !_options.DontDispatch.Contains(typeof(TRequest));
 
       return true;
     }
@@ -166,29 +162,30 @@ namespace Axon.Flow.RabbitMQ
     /// <typeparam name="TRequest">The type of the request.</typeparam>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     /// <param name="request">The request object.</param>
+    /// <param name="queueName">Dispatcher Queue name</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The task representing the response message.</returns>
     public async Task<Messages.ResponseMessage<TResponse>> Dispatch<TRequest, TResponse>(TRequest request, string queueName = null,
       CancellationToken cancellationToken = default)
     {
-      var message = JsonConvert.SerializeObject(request, options.SerializerSettings);
+      var message = JsonConvert.SerializeObject(request, _options.SerializerSettings);
 
       var correlationId = Guid.NewGuid().ToString();
 
       var tcs = new TaskCompletionSource<string>();
-      var rr = _callbackMapper.TryAdd(correlationId, tcs);
+      var _ = _callbackMapper.TryAdd(correlationId, tcs);
 
       await _sendChannel.BasicPublishAsync(
         exchange: Constants.RouterExchangeName,
-        routingKey: queueName ?? typeof(TRequest).AxonTypeName(routerOptions),
+        routingKey: queueName ?? typeof(TRequest).AxonTypeName(_routerOptions),
         mandatory: true,
         body: Encoding.UTF8.GetBytes(message),
         basicProperties: GetBasicProperties(correlationId), cancellationToken: cancellationToken);
 
-      cancellationToken.Register(() => _callbackMapper.TryRemove(correlationId, out var tmp));
+      cancellationToken.Register(() => _callbackMapper.TryRemove(correlationId, out var _));
       var result = await tcs.Task;
 
-      return JsonConvert.DeserializeObject<Messages.ResponseMessage<TResponse>>(result, options.SerializerSettings);
+      return JsonConvert.DeserializeObject<Messages.ResponseMessage<TResponse>>(result, _options.SerializerSettings);
     }
 
     /// <summary>
@@ -196,17 +193,18 @@ namespace Axon.Flow.RabbitMQ
     /// </summary>
     /// <typeparam name="TRequest">The type of the request message.</typeparam>
     /// <param name="request">The request message to send.</param>
+    /// <param name="queueName">The dispatcher queue name</param>
     /// <param name="cancellationToken">A cancellation token to cancel the notification operation.</param>
     /// <returns>A task representing the asynchronous notification operation.</returns>
     public async Task Notify<TRequest>(TRequest request, string queueName = null, CancellationToken cancellationToken = default) where TRequest : INotification
     {
-      var message = JsonConvert.SerializeObject(request, options.SerializerSettings);
+      var message = JsonConvert.SerializeObject(request, _options.SerializerSettings);
       
-      logger.LogInformation($"Sending message to: {Constants.RouterExchangeName}/{queueName ?? request.GetType().AxonTypeName(routerOptions)}");
+      _logger.LogInformation($"Sending message to: {Constants.RouterExchangeName}/{queueName ?? request.GetType().AxonTypeName(_routerOptions)}");
 
       await _sendChannel.BasicPublishAsync(
         exchange: Constants.RouterExchangeName,
-        routingKey: queueName ?? request.GetType().AxonTypeName(routerOptions),
+        routingKey: queueName ?? request.GetType().AxonTypeName(_routerOptions),
         mandatory: false,
         body: Encoding.UTF8.GetBytes(message)
       );
@@ -233,13 +231,14 @@ namespace Axon.Flow.RabbitMQ
     {
       try
       {
-        this.logger.LogInformation("Closing Connection...");
+        this._logger.LogInformation("Closing Connection...");
         _sendChannel?.BasicCancelAsync(_consumerId).Wait();
         _sendChannel?.CloseAsync().Wait();
         // _connection.Close();
       }
       catch (Exception)
       {
+        // ignored
       }
     }
   }

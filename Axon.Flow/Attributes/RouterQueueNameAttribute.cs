@@ -6,7 +6,7 @@ namespace Axon.Flow
   /// Represents an attribute used to specify the name of the Axon.Router queue for a class.
   /// </summary>
   [AttributeUsage(AttributeTargets.Class)]
-  public class RouterQueueNameAttribute : System.Attribute
+  public class RouterQueueNameAttribute : Attribute
   {
     public string Name { get; set; }
   }

@@ -1,14 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using Axon;
-using Axon.Flow.GRPC;
-using Axon.Flow;
 using Axon.Flow.Messages;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
@@ -20,7 +15,7 @@ using Type = System.Type;
 
 namespace Axon.Flow.GRPC
 {
-  public class RequestsManager : global::Axon.Flow.GRPC.GrpcServices.GrpcServicesBase
+  public class RequestsManager : GrpcServices.GrpcServicesBase
   {
     private readonly ILogger<RequestsManager> _logger;
     private readonly IServiceProvider _provider;
@@ -100,7 +95,7 @@ namespace Axon.Flow.GRPC
         responseMsg = JsonConvert.SerializeObject(new ResponseMessage
           {
             Exception = ex,
-            OriginaStackTrace = ex.StackTrace?.ToString(),
+            OriginaStackTrace = ex.StackTrace,
             Status = StatusEnum.Exception, Content = Unit.Value
           },
           _options.SerializerSettings);

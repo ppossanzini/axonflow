@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Axon;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Axon.Flow
 {
@@ -20,7 +17,7 @@ namespace Axon.Flow
     public AxonFlow(IServiceProvider serviceProvider, IRouter router, ILogger<AxonFlow> logger) : base(serviceProvider)
     {
       this._router = router;
-      
+
       this._logger = logger;
     }
 
@@ -52,10 +49,10 @@ namespace Axon.Flow
     {
       var not = notification;
       string queueName = null;
-      if (typeof(IExplicitQueue).IsAssignableFrom(notification.GetType()))
+      if (notification is IExplicitQueue queue)
       {
-        not = (notification as ExplicitQueueNotification<INotification>).Message;
-        queueName = (notification as IExplicitQueue).QueueName;
+        not = (queue as ExplicitQueueNotification<INotification>)?.Message;
+        queueName = queue.QueueName;
       }
 
       try

@@ -2,13 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
 using Axon;
 using Axon.Flow;
 using Confluent.Kafka;
 using Confluent.Kafka.Admin;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Axon.Flow.Kafka;
 

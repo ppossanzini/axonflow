@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Axon.Flow
 {
@@ -9,10 +8,10 @@ namespace Axon.Flow
     public string DefaultQueuePrefix { get; set; } = String.Empty;
 
     /// <summary>
-    /// Gets or sets the behaviour of the axonflow.
+    /// Gets or sets the behavior of the axonflow.
     /// </summary>
     /// <value>
-    /// The behaviour of the axonflow.
+    /// The behaviour of the axon flow.
     /// </value>
     public AxonFlowBehaviourEnum Behaviour { get; set; } = AxonFlowBehaviourEnum.ImplicitLocal;
 

@@ -1,9 +1,7 @@
 using System;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Axon;
 using Microsoft.Extensions.Logging;
 
 namespace Axon.Flow.Pipelines
@@ -45,8 +43,9 @@ namespace Axon.Flow.Pipelines
         var req = ((IExplicitQueue)request).MessageObject;
         var type = request.GetType().GetGenericArguments()[0];
 
-        return ((TResponse)this.GetType().GetMethod(nameof(InvokeHandler), BindingFlags.Instance | BindingFlags.NonPublic).MakeGenericMethod(type)
-          .Invoke(this, new object[] { next, req, queueName, cancellationToken }));
+        return ((TResponse)GetType().GetMethod(nameof(InvokeHandler), BindingFlags.Instance | BindingFlags.NonPublic)
+          ?.MakeGenericMethod(type)
+          .Invoke(this, new[] { next, req, queueName, cancellationToken }));
       }
 
       return await InvokeHandler(next, request, null, cancellationToken);
