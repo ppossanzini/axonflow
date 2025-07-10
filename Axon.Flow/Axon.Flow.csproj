@@ -28,7 +28,7 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.2"/>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
     <PackageReference Include="AxonFlow.Contracts">
-      <Version>[9.0.*,10.0.0)</Version>
+      <Version>[9.*,10.0.0)</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
