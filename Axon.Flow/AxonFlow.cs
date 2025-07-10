@@ -8,8 +8,8 @@ namespace Axon.Flow
 {
   /// OrchestratorGateway class is a subclass of Orchestrator that adds additional functionality for remote request arbitration.
   /// /
-  public class AxonFlow : global::Axon.Axon
-  {
+  public class AxonFlow : Axon
+  { 
     private readonly IRouter _router;
     private readonly ILogger<AxonFlow> _logger;
     private bool _allowRemoteRequest = true;

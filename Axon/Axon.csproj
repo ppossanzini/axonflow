@@ -31,15 +31,14 @@
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" Condition="'$(TargetFramework)' == 'netstandard2.0'"/>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0"/>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
-
+    <PackageReference Include="AxonFlow.Contracts" Version="[9.1.0,)" />
   </ItemGroup>
   
+  <ItemGroup>
+<!--    <ProjectReference Include="..\Axon.Contracts\Axon.Contracts.csproj" />-->
+  </ItemGroup>
   <ItemGroup>
     <None Include="..\assets\Logo-128.png" Pack="true" PackagePath=""/>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\Axon.Contracts\Axon.Contracts.csproj" />
   </ItemGroup>
   
 
