@@ -32,7 +32,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0"/>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
     <PackageReference Include="AxonFlow.Contracts"  >
-      <Version>[9.*,10.0.0)</Version>
+<!--      <Version>[9.*,10.0.0)</Version>-->
     </PackageReference>
   </ItemGroup>
   
