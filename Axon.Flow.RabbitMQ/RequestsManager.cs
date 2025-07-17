@@ -95,7 +95,7 @@ namespace Axon.Flow.RabbitMQ
         if (t is null) continue;
         var isNotification = t.IsNotification();
         var isDurableNotification = isNotification && _routerOptions.QueueNames.ContainsKey(t);
-        var queueName = t.AxonFlowQueueName(_routerOptions);
+        var queueNames = t.AxonFlowQueueName(_routerOptions);
 
         var arguments = new Dictionary<string, object>();
         var timeout = t.QueueTimeout();
@@ -105,11 +105,13 @@ namespace Axon.Flow.RabbitMQ
         }
 
 
-        await _channel.QueueDeclareAsync(queue: queueName, durable: _options.Durable,
-          exclusive: isNotification && !isDurableNotification,
-          autoDelete: _options.AutoDelete, arguments: arguments, cancellationToken: cancellationToken);
-        await _channel.QueueBindAsync(queueName, Constants.RouterExchangeName, t.AxonTypeName(_routerOptions), cancellationToken: cancellationToken);
-
+        foreach (var queueName in queueNames)
+        {
+          await _channel.QueueDeclareAsync(queue: queueName, durable: _options.Durable,
+            exclusive: isNotification && !isDurableNotification,
+            autoDelete: _options.AutoDelete, arguments: arguments, cancellationToken: cancellationToken);
+          await _channel.QueueBindAsync(queueName, Constants.RouterExchangeName, t.AxonTypeName(_routerOptions), cancellationToken: cancellationToken);
+        }
 
         var consumer = new AsyncEventingBasicConsumer(_channel);
         _consumers.Add(t, consumer);
@@ -131,8 +133,10 @@ namespace Axon.Flow.RabbitMQ
             _logger.LogError(e, e.Message);
           }
         };
-
-        await _channel.BasicConsumeAsync(queue: queueName, autoAck: isNotification, consumer: consumer, cancellationToken: cancellationToken);
+        foreach (var queueName in queueNames)
+        {
+          await _channel.BasicConsumeAsync(queue: queueName, autoAck: isNotification, consumer: consumer, cancellationToken: cancellationToken);
+        }
       }
     }
 
@@ -312,6 +316,7 @@ namespace Axon.Flow.RabbitMQ
       {
         // ignored
       }
+
       return Task.CompletedTask;
     }
   }

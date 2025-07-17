@@ -29,9 +29,9 @@ namespace Microsoft.Extensions.DependencyInjection
       return services;
     }
 
-    public static string AxonFlowQueueName(this Type t, RouterOptions options, StringBuilder sb = null)
+    public static string[] AxonFlowQueueName(this Type t, RouterOptions options, StringBuilder sb = null)
     {
-      if (options.QueueNames.TryGetValue(t, out string queueName)) return queueName;
+      if (options.QueueNames.TryGetValue(t, out HashSet<string> queueNames)) return queueNames.ToArray();
 
       sb = sb ?? new StringBuilder();
       sb.Append(t.AxonTypeName(options));
@@ -39,7 +39,7 @@ namespace Microsoft.Extensions.DependencyInjection
       sb.Append("$");
       if (t.IsNotification())
         sb.Append(Guid.NewGuid().ToString());
-      return sb.ToString();
+      return new[] { sb.ToString() };
     }
 
     public static MessageDispatcherOptions DispatchOnlyTo(this MessageDispatcherOptions options,

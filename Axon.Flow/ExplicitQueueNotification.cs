@@ -1,6 +1,9 @@
 
+using System;
+
 namespace Axon.Flow
 {
+  [Obsolete("Use IRouteTo interface instead")]
   public class ExplicitQueueNotification<T> : IExplicitQueue, INotification
     where T : INotification
   {

@@ -31,7 +31,7 @@ namespace Axon.Flow
     /// </summary>
     public Dictionary<string, string> TypePrefixes { get; private set; } = new Dictionary<string, string>();
 
-    public Dictionary<Type, string> QueueNames { get; private set; } = new Dictionary<Type, string>();
+    public Dictionary<Type, HashSet<string>> QueueNames { get; private set; } = new Dictionary<Type, HashSet<string>>();
   }
 
 
