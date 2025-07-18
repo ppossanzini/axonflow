@@ -12,8 +12,8 @@ namespace Axon.Flow
     bool HasRemoteHandler(Type t);
     HandlerLocation GetLocation(Type t);
     HandlerLocation GetLocation<T>();
-    Task<TResponse> InvokeRemoteHandler<TRequest, TResponse>(TRequest request, string queueName = null); 
-    Task SendRemoteNotification<TRequest>(TRequest request, string queueName = null) where TRequest : INotification;
+    Task<TResponse> InvokeRemoteHandler<TRequest, TResponse>(TRequest request); 
+    Task SendRemoteNotification<TRequest>(TRequest request) where TRequest : INotification;
 
     IEnumerable<Type> GetLocalRequestsTypes();
     IEnumerable<Type> GetRemoteRequestsTypes();

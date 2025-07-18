@@ -68,6 +68,7 @@ namespace Axon.Flow
     /// <returns>The location of the handler.</returns>
     public HandlerLocation GetLocation<T>() => this.GetLocation(typeof(T));
 
+
     /// <summary>
     /// Gets the location of the handler based on the specified behavior and type.
     /// </summary>
@@ -94,25 +95,25 @@ namespace Axon.Flow
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     /// <param name="request">The request object.</param>
     /// <returns>The response object.</returns>
-    public async Task<TResponse> InvokeRemoteHandler<TRequest, TResponse>(TRequest request, string queueName = null)
+    public async Task<TResponse> InvokeRemoteHandler<TRequest, TResponse>(TRequest request)
     {
-      _logger.LogDebug($"Invoking remote handler for: {queueName ?? typeof(TRequest).AxonTypeName(_options)}");
+      _logger.LogDebug($"Invoking remote handler for: {typeof(TRequest).AxonTypeName(_options)}");
 
       ResponseMessage<TResponse> result = null;
       foreach (var dispatcher in this._messageDispatchers)
       {
         if (!dispatcher.CanDispatch<TRequest>()) continue;
-        result = await dispatcher.Dispatch<TRequest, TResponse>(request, queueName);
+        result = await dispatcher.Dispatch<TRequest, TResponse>(request);
         break;
       }
 
-      _logger.LogDebug($"Remote request for {queueName ?? typeof(TRequest).AxonTypeName(_options)} completed!");
+      _logger.LogDebug($"Remote request for {typeof(TRequest).AxonTypeName(_options)} completed!");
 
       if (result == null)
       {
         throw new Exception("Cannot dispatch message to any remote handler");
       }
-      
+
       if (result.Status == Messages.StatusEnum.Exception)
       {
         _logger.LogError($"Remote handler returned an exception: {result.Exception?.Message} at \n {result.OriginaStackTrace}");
@@ -128,12 +129,12 @@ namespace Axon.Flow
     /// <typeparam name="TRequest">The type of the notification.</typeparam>
     /// <param name="request">The notification request to send.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public Task SendRemoteNotification<TRequest>(TRequest request, string queueName = null) where TRequest : INotification
+    public Task SendRemoteNotification<TRequest>(TRequest request) where TRequest : INotification
     {
-      _logger.LogDebug($"Invoking remote handler for: {queueName ?? typeof(TRequest).AxonTypeName(_options)}");
-      Task.WaitAll(_messageDispatchers.Select(i => i.Notify(request, queueName)).ToArray());
+      _logger.LogDebug($"Invoking remote handler for: {typeof(TRequest).AxonTypeName(_options)}");
+      Task.WaitAll(_messageDispatchers.Select(i => i.Notify(request)).ToArray());
 
-      _logger.LogDebug($"Remote request for {queueName ?? typeof(TRequest).AxonTypeName(_options)} completed!");
+      _logger.LogDebug($"Remote request for {typeof(TRequest).AxonTypeName(_options)} completed!");
       return Task.CompletedTask;
     }
 

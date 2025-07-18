@@ -48,18 +48,13 @@ namespace Axon.Flow
       CancellationToken cancellationToken)
     {
       var not = notification;
-      string queueName = null;
-      if (notification is IExplicitQueue queue)
-      {
-        not = (queue as ExplicitQueueNotification<INotification>)?.Message;
-        queueName = queue.QueueName;
-      }
+
 
       try
       {
         if (_allowRemoteRequest)
         {
-          await _router.SendRemoteNotification(not, queueName);
+          await _router.SendRemoteNotification(not);
         }
         else
           await base.PublishCore(handlerExecutors, not, cancellationToken);

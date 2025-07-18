@@ -7,8 +7,8 @@ namespace Axon.Flow
   {
     bool CanDispatch<TRequest>();
 
-    Task<Messages.ResponseMessage<TResponse>> Dispatch<TRequest, TResponse>(TRequest request, string queueName, CancellationToken cancellationToken = default);
+    Task<Messages.ResponseMessage<TResponse>> Dispatch<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default);
 
-    Task Notify<TRequest>(TRequest request, string queueName, CancellationToken cancellationToken = default) where TRequest : INotification;
+    Task Notify<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : INotification;
   }
 }

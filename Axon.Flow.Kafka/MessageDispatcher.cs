@@ -32,7 +32,7 @@ namespace Axon.Flow.Kafka
 
     public MessageDispatcher(IOptions<MessageDispatcherOptions> options, ILogger<MessageDispatcher> logger, IServiceProvider provider,
       IOptions<RouterOptions> axonflowOptions)
-    { 
+    {
       this._options = options.Value;
       this._logger = logger;
       _provider = provider;
@@ -110,9 +110,12 @@ namespace Axon.Flow.Kafka
     /// <param name="request">The request message to be dispatched.</param>
     /// <param name="cancellationToken">The cancellation token to cancel the dispatch operation.</param>
     /// <returns>A task that represents the asynchronous dispatch operation. The task result contains the response message.</returns>
-    public async Task<Messages.ResponseMessage<TResponse>> Dispatch<TRequest, TResponse>(TRequest request, string queueName = null,
+    public async Task<Messages.ResponseMessage<TResponse>> Dispatch<TRequest, TResponse>(TRequest request,
       CancellationToken cancellationToken = default)
     {
+      var internalQueue = typeof(TRequest).AxonTypeName(_axonflowOptions);
+      string queueName = (request as IRouteTo)?.RouteTo(internalQueue);
+
       var correlationId = Guid.NewGuid().ToString();
       var message = JsonConvert.SerializeObject(new KafkaMessage<TRequest>
       {
@@ -125,8 +128,11 @@ namespace Axon.Flow.Kafka
       var tcs = new TaskCompletionSource<string>();
       _callbackMapper.TryAdd(correlationId, tcs);
 
+      var internalTypeName = typeof(TRequest).AxonTypeName(_axonflowOptions);
+      var routeto = request as IRouteTo;
+
       await _producer.ProduceAsync(
-        topic: queueName ?? typeof(TRequest).AxonTypeName(_axonflowOptions),
+        topic: queueName ?? internalQueue,
         message: new Message<Null, string> { Value = message }, cancellationToken);
 
       cancellationToken.Register(() => _callbackMapper.TryRemove(correlationId, out var _));
@@ -143,14 +149,17 @@ namespace Axon.Flow.Kafka
     /// <param name="request">The request object.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A Task representing the asynchronous operation.</returns>
-    public async Task Notify<TRequest>(TRequest request, string queueName = null, CancellationToken cancellationToken = default) where TRequest : INotification
+    public async Task Notify<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : INotification
     {
+      var internalQueue = typeof(TRequest).AxonTypeName(_axonflowOptions);
+      string queueName = (request as IRouteTo)?.RouteTo(internalQueue);
+
       var message = JsonConvert.SerializeObject(request, _options.SerializerSettings);
 
-      _logger.LogInformation($"Sending message to: {Consts.AxonFlowExchangeName}/{queueName ?? request.GetType().AxonTypeName(_axonflowOptions)}");
+      _logger.LogInformation($"Sending message to: {Consts.AxonFlowExchangeName}/{queueName ?? internalQueue}");
 
       await _producer.ProduceAsync(
-        topic: queueName ?? typeof(TRequest).AxonTypeName(_axonflowOptions),
+        topic: queueName ?? internalQueue,
         message: new Message<Null, string> { Value = message }, cancellationToken);
     }
 

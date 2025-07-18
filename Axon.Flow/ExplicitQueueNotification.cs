@@ -3,7 +3,7 @@ using System;
 
 namespace Axon.Flow
 {
-  [Obsolete("Use IRouteTo interface instead")]
+  [Obsolete("Use IRouteTo interface instead", true)]
   public class ExplicitQueueNotification<T> : IExplicitQueue, INotification
     where T : INotification
   {

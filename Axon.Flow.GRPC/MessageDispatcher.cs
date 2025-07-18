@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -28,7 +27,6 @@ namespace Axon.Flow.GRPC
       IOptions<MessageDispatcherOptions> options,
       ILogger<MessageDispatcher> logger, IOptions<RouterOptions> routerOptions)
     {
-      
       this.options = options.Value;
       this.logger = logger;
       this.routerOptions = routerOptions.Value;
@@ -80,16 +78,18 @@ namespace Axon.Flow.GRPC
       return true;
     }
 
-    public async Task<ResponseMessage<TResponse>> Dispatch<TRequest, TResponse>(TRequest request, string queueName = null,
+    public async Task<ResponseMessage<TResponse>> Dispatch<TRequest, TResponse>(TRequest request,
       CancellationToken cancellationToken = default)
     {
+      var internalQueue = typeof(TRequest).AxonTypeName(routerOptions);
+      string queueName = (request as IRouteTo)?.RouteTo(internalQueue);
       var message = JsonConvert.SerializeObject(request, options.SerializerSettings);
 
       var grpcClient = GetClientFor<TRequest>();
       var result = await grpcClient.ManageAxonFlowMessageAsync(new RequestMessage
       {
         Body = message,
-        AxonFlowType = queueName ?? typeof(TRequest).AxonTypeName(routerOptions)
+        AxonFlowType = queueName ?? internalQueue
       });
       return JsonConvert.DeserializeObject<ResponseMessage<TResponse>>(result.Body, options.SerializerSettings);
     }
@@ -101,8 +101,10 @@ namespace Axon.Flow.GRPC
     /// <param name="request">The request message to send.</param>
     /// <param name="cancellationToken">A cancellation token to cancel the notification operation.</param>
     /// <returns>A task representing the asynchronous notification operation.</returns>
-    public Task Notify<TRequest>(TRequest request, string queueName = null, CancellationToken cancellationToken = default) where TRequest : INotification
+    public Task Notify<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : INotification
     {
+      var internalQueue = typeof(TRequest).AxonTypeName(routerOptions);
+      string queueName = (request as IRouteTo)?.RouteTo(internalQueue);
       var message = JsonConvert.SerializeObject(request, options.SerializerSettings);
 
       logger.LogInformation($"Sending notifications of: {typeof(TRequest).Name}/{queueName ?? request.GetType().AxonTypeName(routerOptions)}");
@@ -113,7 +115,7 @@ namespace Axon.Flow.GRPC
         grpcClient.ManageAxonFlowNotificationAsync(new NotifyMessage()
         {
           Body = message,
-          AxonFlowType = queueName ?? typeof(TRequest).AxonTypeName(routerOptions)
+          AxonFlowType = queueName ?? internalQueue
         });
       }
 

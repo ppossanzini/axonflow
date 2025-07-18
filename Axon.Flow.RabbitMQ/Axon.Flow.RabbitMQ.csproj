@@ -20,6 +20,7 @@
     <PackageId>AxonFlow.Flow.RabbitMQ</PackageId>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\AxonFlow.snk</AssemblyOriginatorKeyFile>
+    <AssemblyVersion>10.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="RabbitMQ.Client" Version="7.0.0" />

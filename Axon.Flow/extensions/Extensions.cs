@@ -376,12 +376,11 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <returns>The type name for the specified type.</returns>
     public static string AxonTypeName(this Type t, RouterOptions options, StringBuilder sb = null)
     {
-      var routeTo = t as IRouteTo;
-
+      
       if (t.CustomAttributes.Any())
       {
         var attr = t.GetCustomAttribute<RouterQueueNameAttribute>();
-        if (attr != null) return routeTo?.RouteTo($"{t.Namespace}.{attr.Name}".Replace(".", "_")) ?? $"{t.Namespace}.{attr.Name}".Replace(".", "_");
+        if (attr != null) return $"{t.Namespace}.{attr.Name}".Replace(".", "_");
       }
 
       options.TypePrefixes.TryGetValue(t.FullName, out var prefix);
@@ -404,7 +403,7 @@ namespace Microsoft.Extensions.DependencyInjection
         sb.Append("]");
       }
 
-      return routeTo?.RouteTo(sb.ToString().Replace(",]", "]").Replace(".", "_")) ?? sb.ToString().Replace(",]", "]").Replace(".", "_");
+      return  sb.ToString().Replace(",]", "]").Replace(".", "_");
     }
 
 

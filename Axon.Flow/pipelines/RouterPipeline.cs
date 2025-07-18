@@ -48,17 +48,17 @@ namespace Axon.Flow.Pipelines
           .Invoke(this, new[] { next, req, queueName, cancellationToken }));
       }
 
-      return await InvokeHandler(next, request, null, cancellationToken);
+      return await InvokeHandler(next, request, cancellationToken);
     }
 
-    private async Task<TResponse> InvokeHandler<T>(RequestHandlerDelegate<TResponse> next, T req, string queueName, CancellationToken cancellationToken)
+    private async Task<TResponse> InvokeHandler<T>(RequestHandlerDelegate<TResponse> next, T req,  CancellationToken cancellationToken)
     {
       try
       {
         switch (_router.GetLocation(req.GetType()))
         {
           case HandlerLocation.Local: return await next(cancellationToken).ConfigureAwait(false);
-          case HandlerLocation.Remote: return await _router.InvokeRemoteHandler<T, TResponse>(req, queueName);
+          case HandlerLocation.Remote: return await _router.InvokeRemoteHandler<T, TResponse>(req);
           default: throw new InvalidHandlerException();
         }
       }

@@ -34,27 +34,27 @@ namespace Axon.Flow.RabbitMQ
     /// <summary>
     /// Stores an instance of an object that implements the IConnection interface.
     /// </summary>
-    private IConnection _connection ;
+    private IConnection _connection;
 
     /// <summary>
     /// The channel used for sending messages.
     /// </summary>
-    private IChannel _sendChannel ;
+    private IChannel _sendChannel;
 
     /// <summary>
     /// Represents the name of the reply queue.
     /// </summary>
-    private string _replyQueueName ;
+    private string _replyQueueName;
 
     /// <summary>
     /// Represents an asynchronous event-based consumer for sending messages.
     /// </summary>
-    private AsyncEventingBasicConsumer _sendConsumer ;
+    private AsyncEventingBasicConsumer _sendConsumer;
 
     /// <summary>
     /// The unique identifier of the consumer.
     /// </summary>
-    private string _consumerId ;
+    private string _consumerId;
 
     /// <summary>
     /// Dictionary that maps callback strings to TaskCompletionSource objects.
@@ -165,9 +165,12 @@ namespace Axon.Flow.RabbitMQ
     /// <param name="queueName">Dispatcher Queue name</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The task representing the response message.</returns>
-    public async Task<Messages.ResponseMessage<TResponse>> Dispatch<TRequest, TResponse>(TRequest request, string queueName = null,
+    public async Task<Messages.ResponseMessage<TResponse>> Dispatch<TRequest, TResponse>(TRequest request,
       CancellationToken cancellationToken = default)
     {
+      var internalQueue = typeof(TRequest).AxonTypeName(_routerOptions);
+      string queueName = (request as IRouteTo)?.RouteTo(internalQueue);
+
       var message = JsonConvert.SerializeObject(request, _options.SerializerSettings);
 
       var correlationId = Guid.NewGuid().ToString();
@@ -177,7 +180,7 @@ namespace Axon.Flow.RabbitMQ
 
       await _sendChannel.BasicPublishAsync(
         exchange: Constants.RouterExchangeName,
-        routingKey: queueName ?? typeof(TRequest).AxonTypeName(_routerOptions),
+        routingKey: queueName ?? internalQueue,
         mandatory: true,
         body: Encoding.UTF8.GetBytes(message),
         basicProperties: GetBasicProperties(correlationId), cancellationToken: cancellationToken);
@@ -196,15 +199,18 @@ namespace Axon.Flow.RabbitMQ
     /// <param name="queueName">The dispatcher queue name</param>
     /// <param name="cancellationToken">A cancellation token to cancel the notification operation.</param>
     /// <returns>A task representing the asynchronous notification operation.</returns>
-    public async Task Notify<TRequest>(TRequest request, string queueName = null, CancellationToken cancellationToken = default) where TRequest : INotification
+    public async Task Notify<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : INotification
     {
+      var internalQueue = typeof(TRequest).AxonTypeName(_routerOptions);
+      string queueName = (request as IRouteTo)?.RouteTo(internalQueue);
+
       var message = JsonConvert.SerializeObject(request, _options.SerializerSettings);
-      
+
       _logger.LogInformation($"Sending message to: {Constants.RouterExchangeName}/{queueName ?? request.GetType().AxonTypeName(_routerOptions)}");
 
       await _sendChannel.BasicPublishAsync(
         exchange: Constants.RouterExchangeName,
-        routingKey: queueName ?? request.GetType().AxonTypeName(_routerOptions),
+        routingKey: queueName ?? internalQueue,
         mandatory: false,
         body: Encoding.UTF8.GetBytes(message)
       );
