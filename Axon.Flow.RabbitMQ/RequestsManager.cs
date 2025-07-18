@@ -86,7 +86,7 @@ namespace Axon.Flow.RabbitMQ
 
       await ValidateConnectionQos(cancellationToken);
     }
-
+  
 
     private async Task CheckRequestsConsumers(CancellationToken cancellationToken)
     {
@@ -110,7 +110,7 @@ namespace Axon.Flow.RabbitMQ
           await _channel.QueueDeclareAsync(queue: queueName, durable: _options.Durable,
             exclusive: isNotification && !isDurableNotification,
             autoDelete: _options.AutoDelete, arguments: arguments, cancellationToken: cancellationToken);
-          await _channel.QueueBindAsync(queueName, Constants.RouterExchangeName, queueName, cancellationToken: cancellationToken);
+          await _channel.QueueBindAsync(queueName, Constants.RouterExchangeName, isNotification ? t.AxonTypeName(_routerOptions) : queueName, cancellationToken: cancellationToken);
         }
 
         var consumer = new AsyncEventingBasicConsumer(_channel);
@@ -262,7 +262,7 @@ namespace Axon.Flow.RabbitMQ
       {
         replyProps.CorrelationId = ea.BasicProperties.CorrelationId;
 
-        var msg = ea.Body.ToArray();  
+        var msg = ea.Body.ToArray();
         _logger.LogDebug("Elaborating message : {0}", Encoding.UTF8.GetString(msg));
         var message = JsonConvert.DeserializeObject<T>(Encoding.UTF8.GetString(msg), _options.SerializerSettings);
 
