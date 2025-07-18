@@ -9,5 +9,6 @@ namespace Axon.Flow
   public class RouterQueueNameAttribute : Attribute
   {
     public string Name { get; set; }
+    public bool Absolute { get; set; }
   }
 }

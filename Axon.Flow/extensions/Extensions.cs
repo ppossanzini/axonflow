@@ -321,7 +321,7 @@ namespace Microsoft.Extensions.DependencyInjection
         options.QueueNames.Add(type, new HashSet<string>());
 
       options.QueueNames[type].Add(queueName);
-      
+
       return options;
     }
 
@@ -376,11 +376,10 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <returns>The type name for the specified type.</returns>
     public static string AxonTypeName(this Type t, RouterOptions options, StringBuilder sb = null)
     {
-      
       if (t.CustomAttributes.Any())
       {
         var attr = t.GetCustomAttribute<RouterQueueNameAttribute>();
-        if (attr != null) return $"{t.Namespace}.{attr.Name}".Replace(".", "_");
+        if (attr != null) return attr.Absolute ? attr.Name : $"{t.Namespace}.{attr.Name}".Replace(".", "_");
       }
 
       options.TypePrefixes.TryGetValue(t.FullName, out var prefix);
@@ -403,7 +402,7 @@ namespace Microsoft.Extensions.DependencyInjection
         sb.Append("]");
       }
 
-      return  sb.ToString().Replace(",]", "]").Replace(".", "_");
+      return sb.ToString().Replace(",]", "]").Replace(".", "_");
     }
 
 
