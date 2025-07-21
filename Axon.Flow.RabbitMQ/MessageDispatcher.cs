@@ -201,7 +201,7 @@ namespace Axon.Flow.RabbitMQ
     /// <returns>A task representing the asynchronous notification operation.</returns>
     public async Task Notify<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : INotification
     {
-      var internalQueue = typeof(TRequest).AxonTypeName(_routerOptions);
+      var internalQueue = request.GetType().AxonTypeName(_routerOptions);
       string queueName = (request as IRouteTo)?.RouteTo(internalQueue);
 
       var message = JsonConvert.SerializeObject(request, _options.SerializerSettings);
@@ -214,6 +214,8 @@ namespace Axon.Flow.RabbitMQ
         mandatory: false,
         body: Encoding.UTF8.GetBytes(message)
       );
+      
+      _logger.LogInformation($"Sending message to: {Constants.RouterExchangeName}/{queueName ?? internalQueue} .. completed");
     }
 
 
