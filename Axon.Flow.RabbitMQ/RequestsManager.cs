@@ -110,7 +110,7 @@ namespace Axon.Flow.RabbitMQ
           await _channel.QueueDeclareAsync(queue: queueName, durable: _options.Durable,
             exclusive: isNotification && !isDurableNotification,
             autoDelete: _options.AutoDelete, arguments: arguments, cancellationToken: cancellationToken);
-          await _channel.QueueBindAsync(queueName, Constants.RouterExchangeName, isNotification ? t.AxonTypeName(_routerOptions) : queueName, cancellationToken: cancellationToken);
+          await _channel.QueueBindAsync(queueName, Constants.RouterExchangeName, queueName.Split('$')[0], cancellationToken: cancellationToken);
         }
 
         var consumer = new AsyncEventingBasicConsumer(_channel);
