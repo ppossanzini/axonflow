@@ -206,7 +206,7 @@ namespace Axon.Flow.RabbitMQ
 
       var message = JsonConvert.SerializeObject(request, _options.SerializerSettings);
 
-      _logger.LogInformation($"Sending message to: {Constants.RouterExchangeName}/{queueName ?? request.GetType().AxonTypeName(_routerOptions)}");
+      _logger.LogInformation($"Sending message to: {Constants.RouterExchangeName}/{queueName ?? internalQueue}");
 
       await _sendChannel.BasicPublishAsync(
         exchange: Constants.RouterExchangeName,
