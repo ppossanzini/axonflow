@@ -105,7 +105,7 @@ namespace Axon.Flow.RabbitMQ
       }
 
       _sendChannel = await _connection.CreateChannelAsync();
-      await _sendChannel.ExchangeDeclareAsync(Constants.RouterExchangeName, ExchangeType.Topic);
+      await _sendChannel.ExchangeDeclareAsync(_options.ExchangeName, ExchangeType.Topic);
       // _channel.ConfirmSelect();
 
       var queueName = $"{_options.QueueName}.{Process.GetCurrentProcess().Id}.{DateTime.Now.Ticks}";
@@ -179,7 +179,7 @@ namespace Axon.Flow.RabbitMQ
       var _ = _callbackMapper.TryAdd(correlationId, tcs);
 
       await _sendChannel.BasicPublishAsync(
-        exchange: Constants.RouterExchangeName,
+        exchange: _options.ExchangeName,
         routingKey: queueName ?? internalQueue,
         mandatory: true,
         body: Encoding.UTF8.GetBytes(message),
@@ -206,16 +206,16 @@ namespace Axon.Flow.RabbitMQ
 
       var message = JsonConvert.SerializeObject(request, _options.SerializerSettings);
 
-      _logger.LogInformation($"Sending message to: {Constants.RouterExchangeName}/{queueName ?? internalQueue}");
+      _logger.LogInformation($"Sending message to: {_options.ExchangeName}/{queueName ?? internalQueue}");
 
       await _sendChannel.BasicPublishAsync(
-        exchange: Constants.RouterExchangeName,
+        exchange: _options.ExchangeName,
         routingKey: queueName ?? internalQueue,
         mandatory: false,
         body: Encoding.UTF8.GetBytes(message)
       );
       
-      _logger.LogInformation($"Sending message to: {Constants.RouterExchangeName}/{queueName ?? internalQueue} .. completed");
+      _logger.LogInformation($"Sending message to: {_options.ExchangeName}/{queueName ?? internalQueue} .. completed");
     }
 
 

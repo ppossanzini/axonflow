@@ -110,7 +110,7 @@ namespace Axon.Flow.RabbitMQ
           await _channel.QueueDeclareAsync(queue: queueName, durable: _options.Durable,
             exclusive: isNotification && !isDurableNotification,
             autoDelete: _options.AutoDelete, arguments: arguments, cancellationToken: cancellationToken);
-          await _channel.QueueBindAsync(queueName, Constants.RouterExchangeName, queueName.Split('$')[0], cancellationToken: cancellationToken);
+          await _channel.QueueBindAsync(queueName, _options.ExchangeName, queueName.Split('$')[0], cancellationToken: cancellationToken);
         }
 
         var consumer = new AsyncEventingBasicConsumer(_channel);
@@ -205,7 +205,7 @@ namespace Axon.Flow.RabbitMQ
         _connection = await factory.CreateConnectionAsync(cancellationToken);
         _channel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);
 
-        await _channel.ExchangeDeclareAsync(Constants.RouterExchangeName, ExchangeType.Topic, cancellationToken: cancellationToken);
+        await _channel.ExchangeDeclareAsync(_options.ExchangeName, ExchangeType.Topic, cancellationToken: cancellationToken);
 
         _logger.LogInformation("Axon: ready !");
       }

@@ -74,6 +74,8 @@ namespace Axon.Flow.RabbitMQ
     public ushort PerConsumerQos { get; set; } = 1;
 
     public string ClientName { get; set; }
+
+    public string ExchangeName { get; set; } = "Axon-RPC-Exchange";
     
     /// <summary>
     /// Gets or sets the serializer settings for JSON serialization and deserialization.
