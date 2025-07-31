@@ -3,17 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axon.Flow", "Axon.Flow\Axon.Flow.csproj", "{E1E567F0-1BDF-4DE9-86F8-12E6CAFEE1E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axon.Flow", "src\AxonFlow\Axon.Flow\Axon.Flow.csproj", "{E1E567F0-1BDF-4DE9-86F8-12E6CAFEE1E7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axon.Flow.RabbitMQ", "Axon.Flow.RabbitMQ\Axon.Flow.RabbitMQ.csproj", "{7BC4AE47-FEB5-4404-B027-A30FAF581833}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axon.Flow.RabbitMQ", "src\AxonFlow\Axon.Flow.RabbitMQ\Axon.Flow.RabbitMQ.csproj", "{7BC4AE47-FEB5-4404-B027-A30FAF581833}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axon.Flow.Kafka", "Axon.Flow.Kafka\Axon.Flow.Kafka.csproj", "{52E67D98-DE21-4434-AB34-5FF4FB70C5E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axon.Flow.Kafka", "src\AxonFlow\Axon.Flow.Kafka\Axon.Flow.Kafka.csproj", "{52E67D98-DE21-4434-AB34-5FF4FB70C5E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axon.Flow.GRPC", "Axon.Flow.GRPC\Axon.Flow.GRPC.csproj", "{26449499-FBBC-4A2A-AE93-EB97A354BAA6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axon.Flow.GRPC", "src\AxonFlow\Axon.Flow.GRPC\Axon.Flow.GRPC.csproj", "{26449499-FBBC-4A2A-AE93-EB97A354BAA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axon", "Axon\Axon.csproj", "{4C29D2BC-59D9-4F8B-BC4E-F9757817204D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axon", "src\Axon\Axon\Axon.csproj", "{4C29D2BC-59D9-4F8B-BC4E-F9757817204D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axon.Contracts", "Axon.Contracts\Axon.Contracts.csproj", "{D25BF42A-EBFB-43E0-B7E2-6CE37EEF782D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axon.Contracts", "src\Axon\Axon.Contracts\Axon.Contracts.csproj", "{D25BF42A-EBFB-43E0-B7E2-6CE37EEF782D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Axon", "Axon", "{7BC751DF-966A-4419-9687-B939D073FFA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AxonFlow", "AxonFlow", "{6FB9519E-0DAE-4072-9C9C-4EAD2A736048}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AxonMock", "AxonMock", "{6EB38429-F3AC-491E-9D72-EE62FC88FB07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +56,12 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{4C29D2BC-59D9-4F8B-BC4E-F9757817204D} = {7BC751DF-966A-4419-9687-B939D073FFA9}
+		{D25BF42A-EBFB-43E0-B7E2-6CE37EEF782D} = {7BC751DF-966A-4419-9687-B939D073FFA9}
+		{52E67D98-DE21-4434-AB34-5FF4FB70C5E7} = {6FB9519E-0DAE-4072-9C9C-4EAD2A736048}
+		{7BC4AE47-FEB5-4404-B027-A30FAF581833} = {6FB9519E-0DAE-4072-9C9C-4EAD2A736048}
+		{26449499-FBBC-4A2A-AE93-EB97A354BAA6} = {6FB9519E-0DAE-4072-9C9C-4EAD2A736048}
+		{E1E567F0-1BDF-4DE9-86F8-12E6CAFEE1E7} = {6FB9519E-0DAE-4072-9C9C-4EAD2A736048}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA2AB956-E48F-42AE-B669-D12BB549726A}

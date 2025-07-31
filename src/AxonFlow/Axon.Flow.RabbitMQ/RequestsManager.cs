@@ -229,7 +229,7 @@ namespace Axon.Flow.RabbitMQ
         var message = JsonConvert.DeserializeObject<T>(Encoding.UTF8.GetString(msg), _options.SerializerSettings);
 
         axonFlow?.StopPropagating();
-        await axon.Publish(message);
+        await axon.PublishObject(message);
       }
       catch (Exception ex)
       {
@@ -267,7 +267,7 @@ namespace Axon.Flow.RabbitMQ
         var message = JsonConvert.DeserializeObject<T>(Encoding.UTF8.GetString(msg), _options.SerializerSettings);
 
         var axon = _provider.CreateScope().ServiceProvider.GetRequiredService<IAxon>();
-        var response = await axon.Send(message);
+        var response = await axon.SendObject(message);
         responseMsg = JsonConvert.SerializeObject(new Messages.ResponseMessage { Content = response, Status = Messages.StatusEnum.Ok },
           _options.SerializerSettings);
         _logger.LogDebug("Elaborating sending response : {0}", responseMsg);

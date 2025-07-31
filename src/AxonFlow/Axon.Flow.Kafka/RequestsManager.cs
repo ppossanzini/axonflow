@@ -142,7 +142,7 @@ namespace Axon.Flow.Kafka
       {
         var axonflow = axon as AxonFlow;
         axonflow?.StopPropagating();
-        await axon.Publish(message.Message);
+        await axon.PublishObject(message.Message);
         axonflow?.ResetPropagating();
       }
       catch (Exception ex)
@@ -172,7 +172,7 @@ namespace Axon.Flow.Kafka
       string responseMsg = null;
       try
       {
-        var response = await axon.Send(message.Message);
+        var response = await axon.SendObject(message.Message);
         responseMsg = JsonConvert.SerializeObject(
           new KafkaReply
           {

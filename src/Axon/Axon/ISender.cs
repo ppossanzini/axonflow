@@ -33,7 +33,7 @@ public interface ISender
     /// <param name="request">Request object</param>
     /// <param name="cancellationToken">Optional cancellation token</param>
     /// <returns>A task that represents the send operation. The task result contains the type erased handler response</returns>
-    Task<object?> Send(object request, CancellationToken cancellationToken = default);
+    Task<object?> SendObject(object request, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Create a stream via a single stream handler

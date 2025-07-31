@@ -14,7 +14,7 @@ public interface IPublisher
     /// <param name="notification">Notification object</param>
     /// <param name="cancellationToken">Optional cancellation token</param>
     /// <returns>A task that represents the publish operation.</returns>
-    Task Publish(object notification, CancellationToken cancellationToken = default);
+    Task PublishObject(object notification, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Asynchronously send a notification to multiple handlers

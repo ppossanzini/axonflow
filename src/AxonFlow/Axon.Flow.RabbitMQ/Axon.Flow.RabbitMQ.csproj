@@ -19,7 +19,7 @@
     
     <PackageId>AxonFlow.Flow.RabbitMQ</PackageId>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\AxonFlow.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\AxonFlow.snk</AssemblyOriginatorKeyFile>
     <AssemblyVersion>10.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -31,6 +31,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Axon.Flow\Axon.Flow.csproj" />
   </ItemGroup>  <ItemGroup>
-  <None Include="..\assets\Logo-128.png" Pack="true" PackagePath="" />
+  <None Include="..\..\..\assets\Logo-128.png" Pack="true" PackagePath="" />
 </ItemGroup>
 </Project>

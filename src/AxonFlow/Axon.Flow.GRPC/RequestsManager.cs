@@ -85,7 +85,7 @@ namespace Axon.Flow.GRPC
 
 
         var orchestrator = _provider.CreateScope().ServiceProvider.GetRequiredService<IAxon>();
-        var response = await orchestrator.Send(message);
+        var response = await orchestrator.SendObject(message);
         responseMsg = JsonConvert.SerializeObject(new ResponseMessage { Content = response, Status = StatusEnum.Ok },
           _options.SerializerSettings);
         _logger.LogDebug("Elaborating sending response : {0}", responseMsg);
@@ -141,7 +141,7 @@ namespace Axon.Flow.GRPC
         var message = JsonConvert.DeserializeObject<T>(msg, _options.SerializerSettings);
 
         router?.StopPropagating();
-        await axon.Publish(message);
+        await axon.PublishObject(message);
       }
       catch (Exception ex)
       {

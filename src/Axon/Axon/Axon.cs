@@ -74,7 +74,7 @@ public class Axon : IAxon
         return handler.Handle(request, _serviceProvider, cancellationToken);
     }
 
-    public Task<object?> Send(object request, CancellationToken cancellationToken = default)
+    public Task<object?> SendObject(object request, CancellationToken cancellationToken = default)
     {
         if (request == null)
         {
@@ -121,7 +121,7 @@ public class Axon : IAxon
         return PublishNotification(notification, cancellationToken);
     }
 
-    public Task Publish(object notification, CancellationToken cancellationToken = default) =>
+    public Task PublishObject(object notification, CancellationToken cancellationToken = default) =>
         notification switch
         {
             null => throw new ArgumentNullException(nameof(notification)),

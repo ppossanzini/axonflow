@@ -19,7 +19,7 @@
     <RootNamespace>Axon.Flow</RootNamespace>
     <PackageIcon>Logo-128.png</PackageIcon>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\AxonFlow.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\AxonFlow.snk</AssemblyOriginatorKeyFile>
     <AssemblyVersion>10.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -32,11 +32,10 @@
 <!--    <PackageReference Include="AxonFlow" Version="[9.1.0,)" />-->
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Axon\Axon.csproj"/>
-<!--    <ProjectReference Include="..\Axon.Contracts\Axon.Contracts.csproj" />-->
+    <None Include="..\..\..\assets\Logo-128.png" Pack="true" PackagePath=""/>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\assets\Logo-128.png" Pack="true" PackagePath=""/>
+    <ProjectReference Include="..\..\Axon\Axon\Axon.csproj" />
   </ItemGroup>
 </Project>
 
