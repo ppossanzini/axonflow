@@ -20,7 +20,7 @@
     <PackageIcon>Logo-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\AxonFlow.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\AxonFlow.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
 
@@ -29,6 +29,6 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\assets\Logo-128.png" Pack="true" PackagePath=""/>
+    <None Include="..\..\..\assets\Logo-128.png" Pack="true" PackagePath=""/>
   </ItemGroup>
 </Project>
