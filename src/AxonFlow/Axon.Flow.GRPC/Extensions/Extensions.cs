@@ -117,12 +117,12 @@ namespace Microsoft.Extensions.DependencyInjection
       var gbuilder = services.AddGrpc();
       if (grpcOptions != null)
       {
-        gbuilder.AddServiceOptions<MessageDispatcher>(grpcOptions);
+        gbuilder.AddServiceOptions(grpcOptions);
       }
 
       services.AddCors(o => o.AddAxonFlowGrpcCors());
 
-      services.Configure<MessageDispatcherOptions>(config);
+      services.Configure(config);
       services.AddKeyedSingleton<IExternalMessageDispatcher, MessageDispatcher>(Router.RouterKeyServicesName);
 
       return services;

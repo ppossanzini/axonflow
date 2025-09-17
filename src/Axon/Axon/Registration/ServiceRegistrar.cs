@@ -9,6 +9,10 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Axon.Registration;
 
+/// <summary>
+/// Provides methods for registering services and managing the configuration
+/// necessary for Axon-based dependency injection setups.
+/// </summary>
 public static class ServiceRegistrar
 {
   private static int MaxGenericTypeParameters;
@@ -16,6 +20,14 @@ public static class ServiceRegistrar
   private static int MaxGenericTypeRegistrations;
   private static int RegistrationTimeout;
 
+  /// <summary>
+  /// Sets limitations for generic request handler registration based on the specified configuration values.
+  /// </summary>
+  /// <param name="configuration">
+  /// An instance of <see cref="AxonServiceConfiguration"/> that specifies the constraints for generic request handler registration,
+  /// including maximum generic type parameters, maximum types closing, maximum generic type registrations,
+  /// and registration timeout values.
+  /// </param>
   public static void SetGenericRequestHandlerRegistrationLimitations(AxonServiceConfiguration configuration)
   {
     MaxGenericTypeParameters = configuration.MaxGenericTypeParameters;
@@ -24,11 +36,34 @@ public static class ServiceRegistrar
     RegistrationTimeout = configuration.RegistrationTimeout;
   }
 
+  /// <summary>
+  /// Registers MediatR-related classes into the service collection with a specified timeout configuration.
+  /// </summary>
+  /// <param name="services">
+  /// The <see cref="IServiceCollection"/> where MediatR-related services should be added.
+  /// </param>
+  /// <param name="configuration">
+  /// An instance of <see cref="AxonServiceConfiguration"/> that provides the configuration settings
+  /// for service registration, including lifetime, type evaluator, and other constraints.
+  /// </param>
   [Obsolete("Use AddAxonClassesWithTimeout instead", false)]
   public static void AddMediatRClassesWithTimeout(IServiceCollection services, AxonServiceConfiguration configuration)
   {
     AddAxonClassesWithTimeout(services, configuration); 
   }
+
+  /// <summary>
+  /// Registers Axon classes with a set timeout to prevent long-running operations during registration.
+  /// </summary>
+  /// <param name="services">
+  /// An instance of <see cref="IServiceCollection"/> that holds the service descriptors to be registered.
+  /// </param>
+  /// <param name="configuration">
+  /// An instance of <see cref="AxonServiceConfiguration"/> that provides necessary registration settings and preferences.
+  /// </param>
+  /// <exception cref="TimeoutException">
+  /// Thrown when the registration process exceeds the specified timeout duration.
+  /// </exception>
   public static void AddAxonClassesWithTimeout(IServiceCollection services, AxonServiceConfiguration configuration)
   {
     using (var cts = new CancellationTokenSource(RegistrationTimeout))
@@ -44,6 +79,21 @@ public static class ServiceRegistrar
     }
   }
 
+  /// <summary>
+  /// Registers MediatR-related services and configurations using the provided service collection,
+  /// configuration, and optional cancellation token.
+  /// </summary>
+  /// <param name="services">
+  /// The dependency injection service collection where MediatR-related services will be registered.
+  /// </param>
+  /// <param name="configuration">
+  /// An instance of <see cref="AxonServiceConfiguration"/> that contains the necessary settings
+  /// for configuring MediatR-related registrations, such as service lifetimes, request handlers, and publishers.
+  /// </param>
+  /// <param name="cancellationToken">
+  /// An optional <see cref="CancellationToken"/> used to observe and handle cancellation during the registration process.
+  /// Defaults to <see cref="CancellationToken.None"/> if not provided.
+  /// </param>
   [Obsolete("Use AddAxonClasses instead", false)]
   public static void AddMediatRClasses(IServiceCollection services, AxonServiceConfiguration configuration,
     CancellationToken cancellationToken = default)
@@ -51,6 +101,18 @@ public static class ServiceRegistrar
     AddAxonClasses(services, configuration, cancellationToken);
   }
 
+  /// <summary>
+  /// Registers Axon-specific classes into the provided dependency injection service collection based on the specified configuration and cancellation token.
+  /// </summary>
+  /// <param name="services">
+  /// An instance of <see cref="IServiceCollection"/> where the Axon-specific classes will be registered.
+  /// </param>
+  /// <param name="configuration">
+  /// An instance of <see cref="AxonServiceConfiguration"/> that provides configuration options such as assemblies to scan and type evaluation logic.
+  /// </param>
+  /// <param name="cancellationToken">
+  /// A token that can be used to signal the cancellation of the registration process.
+  /// </param>
   public static void AddAxonClasses(IServiceCollection services, AxonServiceConfiguration configuration, CancellationToken cancellationToken = default)
   {
     var assembliesToScan = configuration.AssembliesToRegister.Distinct().ToArray();
@@ -262,6 +324,30 @@ public static class ServiceRegistrar
   }
 
   // Method to generate combinations recursively
+  /// <summary>
+  /// Generates all possible combinations of types from the provided lists, enforcing constraints and supporting cancellation.
+  /// </summary>
+  /// <param name="requestType">
+  /// The generic request type for which combinations of types are being generated.
+  /// </param>
+  /// <param name="lists">
+  /// A list of type lists, where each inner list contains types that can close the generic parameters of the request type.
+  /// </param>
+  /// <param name="depth">
+  /// The current recursive depth in the combination generation process (default is 0).
+  /// </param>
+  /// <param name="cancellationToken">
+  /// A token to observe for cancellation requests, allowing the operation to be terminated prematurely.
+  /// </param>
+  /// <returns>
+  /// A list of combinations, where each combination is a list of types that can close the generic parameters of the request type.
+  /// </returns>
+  /// <exception cref="ArgumentException">
+  /// Thrown if the number of generic type parameters exceeds the maximum allowed or if one of the lists has more types than the maximum allowed.
+  /// </exception>
+  /// <exception cref="OperationCanceledException">
+  /// Thrown if the cancellation is requested before or during the combination generation process.
+  /// </exception>
   public static List<List<Type>> GenerateCombinations(Type requestType, List<List<Type>> lists, int depth = 0, CancellationToken cancellationToken = default)
   {
     if (depth == 0)
@@ -401,6 +487,16 @@ public static class ServiceRegistrar
     list.Add(value);
   }
 
+  /// <summary>
+  /// Adds and configures required Axon services for dependency injection based on the provided service configuration.
+  /// </summary>
+  /// <param name="services">
+  /// An instance of <see cref="IServiceCollection"/> used to register services in the dependency injection container.
+  /// </param>
+  /// <param name="serviceConfiguration">
+  /// An instance of <see cref="AxonServiceConfiguration"/> specifying the settings and types to register,
+  /// including orchestrator implementations, notification publishers, and request/response behaviors.
+  /// </param>
   public static void AddRequiredServices(IServiceCollection services, AxonServiceConfiguration serviceConfiguration)
   {
     // Use TryAdd, so any existing ServiceFactory/IOrchestrator registration doesn't get overridden

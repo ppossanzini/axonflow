@@ -51,7 +51,7 @@ namespace Axon.Flow.GRPC
       return DestinationChannels[options.DefaultServiceUri];
     }
 
-    public Dictionary<string, global::Axon.Flow.GRPC.GrpcServices.GrpcServicesClient> DestinationClients { get; set; } = new();
+    public Dictionary<string, GrpcServices.GrpcServicesClient> DestinationClients { get; set; } = new();
 
     public GrpcServices.GrpcServicesClient GetClientFor<T>()
     {
@@ -104,6 +104,7 @@ namespace Axon.Flow.GRPC
     public Task Notify<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : INotification
     {
       var internalQueue = typeof(TRequest).AxonTypeName(routerOptions);
+      // ReSharper disable once SuspiciousTypeConversion.Global
       string queueName = (request as IRouteTo)?.RouteTo(internalQueue);
       var message = JsonConvert.SerializeObject(request, options.SerializerSettings);
 

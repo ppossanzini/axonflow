@@ -21,8 +21,22 @@ public class RequestExceptionProcessorBehavior<TRequest, TResponse> : IPipelineB
 {
     private readonly IServiceProvider _serviceProvider;
 
+    /// <summary>
+    /// Represents a pipeline behavior that executes all instances of
+    /// <see cref="IRequestExceptionHandler{TRequest,TResponse,TException}"/> after an exception is
+    /// thrown by subsequent steps in the pipeline.
+    /// </summary>
     public RequestExceptionProcessorBehavior(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
 
+    /// <summary>
+    /// Handles the provided request through the pipeline and executes subsequent behavior,
+    /// including exception processing and response creation, if an exception occurs during
+    /// the execution of the pipeline.
+    /// </summary>
+    /// <param name="request">The incoming request to be processed by the pipeline.</param>
+    /// <param name="next">The delegate representing the next action in the pipeline.</param>
+    /// <param name="cancellationToken">The token used to cancel the operation, if needed.</param>
+    /// <returns>The processed response of type <typeparamref name="TResponse"/>.</returns>
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         try

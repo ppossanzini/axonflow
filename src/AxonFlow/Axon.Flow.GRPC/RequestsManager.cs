@@ -108,7 +108,7 @@ namespace Axon.Flow.GRPC
     private async Task ManageGenericAxonFlowNotification<T>(NotifyMessage request)
     {
       var axon = _provider.CreateScope().ServiceProvider.GetRequiredService<IAxon>();
-      var router = axon as global::Axon.Flow.AxonFlow;
+      var router = axon as AxonFlow;
       try
       {
         var msg = request.Body;

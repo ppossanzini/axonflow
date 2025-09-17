@@ -31,6 +31,8 @@ namespace Axon.Flow.Kafka
     private Thread _notificationConsumerThread;
     private Thread _requestConsumerThread;
 
+    private bool _running = true;
+
     private readonly Dictionary<string, MethodInfo> _methods = new Dictionary<string, MethodInfo>();
 
     public RequestsManager(ILogger<RequestsManager> logger, IOptions<MessageDispatcherOptions> options, IRouter router, IServiceProvider provider,
@@ -97,7 +99,7 @@ namespace Axon.Flow.Kafka
 
       _requestConsumerThread = new Thread(() =>
       {
-        while (true)
+        while (_running)
         {
           var notification = _requestConsumer.Consume();
           _methods.TryGetValue(notification.Topic, out var method);
@@ -109,7 +111,7 @@ namespace Axon.Flow.Kafka
 
       _notificationConsumerThread = new Thread(() =>
       {
-        while (true)
+        while (_running)
         {
           var notification = _notificationConsumer.Consume();
           _methods.TryGetValue(notification.Topic, out var method);
@@ -205,6 +207,7 @@ namespace Axon.Flow.Kafka
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
+      _running = false;
       return Task.CompletedTask;
     }
   }

@@ -12,7 +12,7 @@ namespace Axon.Flow.Stats.Controllers
 
         public AxonStatsController(IPerformanceMonitor performanceMonitor)
         {
-            this._performanceMonitor = performanceMonitor;
+            _performanceMonitor = performanceMonitor;
         }
 
         [HttpGet]

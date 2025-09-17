@@ -39,6 +39,13 @@ public class Axon : IAxon
         _publisher = publisher;
     }
 
+    /// <summary>
+    /// Sends a request to the appropriate handler and returns a response of the specified type.
+    /// </summary>
+    /// <typeparam name="TResponse">The type of the response expected from the request handler.</typeparam>
+    /// <param name="request">The request to be processed. Cannot be null.</param>
+    /// <param name="cancellationToken">A cancellation token to observe while waiting for the request to be handled.</param>
+    /// <returns>A task representing the asynchronous operation, containing the response from the request handler.</returns>
     public Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken = default)
     {
         if (request == null)
@@ -56,6 +63,15 @@ public class Axon : IAxon
         return handler.Handle(request, _serviceProvider, cancellationToken);
     }
 
+    /// <summary>
+    /// Sends a request to the appropriate handler and returns a task representing the asynchronous operation.
+    /// </summary>
+    /// <typeparam name="TRequest">The type of the request being sent. Must implement the <see cref="IRequest"/> interface.</typeparam>
+    /// <param name="request">The request to process. Must not be null.</param>
+    /// <param name="cancellationToken">A token that can be used to signal the cancellation of the operation.</param>
+    /// <returns>A task that represents the asynchronous operation of handling the request.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if the request is null.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if no handler could be created for the request type.</exception>
     public Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default)
         where TRequest : IRequest
     {
@@ -74,6 +90,12 @@ public class Axon : IAxon
         return handler.Handle(request, _serviceProvider, cancellationToken);
     }
 
+    /// <summary>
+    /// Sends the specified request object to the appropriate handler for processing asynchronously.
+    /// </summary>
+    /// <param name="request">The request object to be processed. Must implement <see cref="IRequest"/> or <see cref="IRequest{TResponse}"/>.</param>
+    /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+    /// <returns>A task representing the asynchronous operation. The result of the task is the response from the handler or null if no response is expected.</returns>
     public Task<object?> SendObject(object request, CancellationToken cancellationToken = default)
     {
         if (request == null)
@@ -110,6 +132,14 @@ public class Axon : IAxon
         return handler.Handle(request, _serviceProvider, cancellationToken);
     }
 
+    /// <summary>
+    /// Publishes a notification to all registered handlers.
+    /// </summary>
+    /// <typeparam name="TNotification">The type of the notification being published. Must implement <see cref="INotification"/>.</typeparam>
+    /// <param name="notification">The notification instance to be published.</param>
+    /// <param name="cancellationToken">Token to cancel the publish operation.</param>
+    /// <returns>A task that represents the asynchronous publish operation.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the notification is null.</exception>
     public Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default)
         where TNotification : INotification
     {
@@ -121,6 +151,14 @@ public class Axon : IAxon
         return PublishNotification(notification, cancellationToken);
     }
 
+    /// <summary>
+    /// Publishes an object as a notification.
+    /// </summary>
+    /// <param name="notification">The object to be published. Must implement <see cref="INotification"/>.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the operation to complete.</param>
+    /// <returns>A task that represents the asynchronous publish operation.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the <paramref name="notification"/> parameter is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when the <paramref name="notification"/> does not implement <see cref="INotification"/>.</exception>
     public Task PublishObject(object notification, CancellationToken cancellationToken = default) =>
         notification switch
         {
@@ -152,6 +190,13 @@ public class Axon : IAxon
     }
 
 
+    /// <summary>
+    /// Creates an asynchronous stream of responses for the specified stream request.
+    /// </summary>
+    /// <typeparam name="TResponse">The type of the response element in the stream.</typeparam>
+    /// <param name="request">The stream request to process.</param>
+    /// <param name="cancellationToken">A token for observing cancellation requests.</param>
+    /// <returns>An asynchronous stream of responses provided by the stream request handler.</returns>
     public IAsyncEnumerable<TResponse> CreateStream<TResponse>(IStreamRequest<TResponse> request, CancellationToken cancellationToken = default)
     {
         if (request == null)
@@ -172,6 +217,15 @@ public class Axon : IAxon
     }
 
 
+    /// <summary>
+    /// Creates an asynchronous stream of results based on the specified request.
+    /// </summary>
+    /// <param name="request">The request object to process, which must implement <see cref="IStreamRequest{TResponse}"/>.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the asynchronous operation. This parameter is optional.</param>
+    /// <returns>An asynchronous enumerable that streams the results of the operation.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the <paramref name="request"/> is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when the <paramref name="request"/> does not implement <see cref="IStreamRequest{TResponse}"/>.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when an appropriate handler for the request cannot be created.</exception>
     public IAsyncEnumerable<object?> CreateStream(object request, CancellationToken cancellationToken = default)
     {
         if (request == null)

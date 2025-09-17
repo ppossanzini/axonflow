@@ -27,6 +27,8 @@ namespace Axon.Flow.Kafka
     private IConsumer<Null, string> _consumer;
     private string _replyTopicName;
 
+    private bool _running = true;
+
     private readonly ConcurrentDictionary<string, TaskCompletionSource<string>> _callbackMapper =
       new ConcurrentDictionary<string, TaskCompletionSource<string>>();
 
@@ -72,7 +74,7 @@ namespace Axon.Flow.Kafka
       _consumer.Subscribe(_replyTopicName);
       _consumerThread = new Thread(() =>
         {
-          while (true)
+          while (_running)
           {
             var consumeResult = _consumer.Consume();
             if (consumeResult != null)
@@ -167,6 +169,7 @@ namespace Axon.Flow.Kafka
     {
       try
       {
+        _running = false;
       }
       finally
       {
