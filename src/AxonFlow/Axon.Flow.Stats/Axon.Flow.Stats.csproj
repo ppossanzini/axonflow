@@ -2,8 +2,27 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <PackageId>AxonFlow.Stats</PackageId>
-    
+    <Authors>Paolo Possanzini,Teamdev s.r.l.</Authors>
+    <Description>RPC extensions for AxonFlow Stats</Description>
+    <Copyright>Copyright Paolo Possanzini</Copyright>
+    <Features>strict</Features>
+    <PackageTags>mediator;request;response;queries;commands;notifications;rpc;rabbitmq</PackageTags>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <PackageIcon>Logo-128.png</PackageIcon>
+    <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
+
+    <PackageId>AxonFlow.Flow.Stats</PackageId>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\..\AxonFlow.snk</AssemblyOriginatorKeyFile>
+    <AssemblyVersion>10.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
