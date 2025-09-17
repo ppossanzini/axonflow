@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    
     <Authors>Paolo Possanzini,Teamdev s.r.l.</Authors>
     <Description>RPC extensions for AxonFlow Stats</Description>
     <Copyright>Copyright Paolo Possanzini</Copyright>
