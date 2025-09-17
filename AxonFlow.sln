@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AxonFlow", "AxonFlow", "{6F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AxonMock", "AxonMock", "{6EB38429-F3AC-491E-9D72-EE62FC88FB07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axon.Flow.Stats", "src\AxonFlow\Axon.Flow.Stats\Axon.Flow.Stats.csproj", "{72B61E38-5CE2-4627-8405-16DCDAF91236}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{D25BF42A-EBFB-43E0-B7E2-6CE37EEF782D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D25BF42A-EBFB-43E0-B7E2-6CE37EEF782D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D25BF42A-EBFB-43E0-B7E2-6CE37EEF782D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72B61E38-5CE2-4627-8405-16DCDAF91236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72B61E38-5CE2-4627-8405-16DCDAF91236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72B61E38-5CE2-4627-8405-16DCDAF91236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72B61E38-5CE2-4627-8405-16DCDAF91236}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{7BC4AE47-FEB5-4404-B027-A30FAF581833} = {6FB9519E-0DAE-4072-9C9C-4EAD2A736048}
 		{26449499-FBBC-4A2A-AE93-EB97A354BAA6} = {6FB9519E-0DAE-4072-9C9C-4EAD2A736048}
 		{E1E567F0-1BDF-4DE9-86F8-12E6CAFEE1E7} = {6FB9519E-0DAE-4072-9C9C-4EAD2A736048}
+		{72B61E38-5CE2-4627-8405-16DCDAF91236} = {6FB9519E-0DAE-4072-9C9C-4EAD2A736048}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA2AB956-E48F-42AE-B669-D12BB549726A}

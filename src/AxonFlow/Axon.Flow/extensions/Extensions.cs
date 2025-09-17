@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using Axon;
 using Axon.Flow;
+using Axon.Flow.Stats;
 using Microsoft.Extensions.Logging;
 
 // ReSharper disable AssignNullToNotNullAttribute
@@ -34,6 +35,12 @@ namespace Microsoft.Extensions.DependencyInjection
 
       services.AddTransient<global::Axon.IAxon, AxonFlow>();
       return services;
+    }
+    
+    public static IServiceCollection AddAxonFlowPerformanceMonitor(this IServiceCollection services)
+    {
+        services.AddTransient<global::Axon.Flow.IPerformanceMonitor, PerformanceMonitor>();
+        return services;
     }
 
     /// <summary>

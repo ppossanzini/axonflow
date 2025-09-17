@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Axon.Flow
@@ -13,11 +14,11 @@ namespace Axon.Flow
     private readonly IRouter _router;
     private readonly ILogger<AxonFlow> _logger;
     private bool _allowRemoteRequest = true;
+    
 
     public AxonFlow(IServiceProvider serviceProvider, IRouter router, ILogger<AxonFlow> logger) : base(serviceProvider)
     {
       this._router = router;
-
       this._logger = logger;
     }
 
@@ -48,8 +49,7 @@ namespace Axon.Flow
       CancellationToken cancellationToken)
     {
       var not = notification;
-
-
+      
       try
       {
         if (_allowRemoteRequest)
@@ -57,7 +57,9 @@ namespace Axon.Flow
           await _router.SendRemoteNotification(not);
         }
         else
-          await base.PublishCore(handlerExecutors, not, cancellationToken);
+        {
+            await base.PublishCore(handlerExecutors, not, cancellationToken);
+        }
       }
       catch (Exception ex)
       {
