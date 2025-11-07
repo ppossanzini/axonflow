@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Authors>Paolo Possanzini,Teamdev s.r.l.</Authors>
+    <Authors>Paolo Possanzini</Authors>
     <Description>RPC extensions for AxonFlow via pipeline using gRPC</Description>
     <Copyright>Copyright Paolo Possanzini</Copyright>
     <Features>strict</Features>
@@ -25,7 +25,7 @@
     <PackageReference Include="Google.Protobuf" Version="3.25.2"/>
     <PackageReference Include="Grpc.AspNetCore.Web" Version="2.66.0"/>
     <PackageReference Include="Newtonsoft.Json" Version="13.*"/>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.2"/>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.9" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2"/>
     <PackageReference Include="Grpc.AspNetCore" Version="2.60.0"/>
     <PackageReference Include="Grpc.Net.Client" Version="2.60.0"/>
@@ -33,10 +33,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="AxonFlow.Flow" Version="[9.4.1,)" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Axon.Flow\Axon.Flow.csproj" />
-  </ItemGroup>
+<!--  <ItemGroup>-->
+<!--    <ProjectReference Include="..\Axon.Flow\Axon.Flow.csproj" />-->
+<!--  </ItemGroup>-->
   <ItemGroup>
     <Protobuf Include="Protos\RequestsManager.proto" GrpcServices="Both"/>
   </ItemGroup>

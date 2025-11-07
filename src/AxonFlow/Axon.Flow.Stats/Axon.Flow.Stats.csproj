@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     
-    <Authors>Paolo Possanzini,Teamdev s.r.l.</Authors>
+    <Authors>Paolo Possanzini</Authors>
     <Description>AxonFlow Stats</Description>
     <Copyright>Copyright Paolo Possanzini</Copyright>
     <Features>strict</Features>
