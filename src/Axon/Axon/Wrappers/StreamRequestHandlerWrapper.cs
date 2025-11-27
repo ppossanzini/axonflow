@@ -1,4 +1,5 @@
 using System;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Axon.Wrappers;

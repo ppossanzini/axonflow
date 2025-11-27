@@ -30,11 +30,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0"/>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
-    <PackageReference Include="AxonFlow.Contracts" Version="[9.3.1,)" />
+<!--    <PackageReference Include="AxonFlow.Contracts" Version="[9.3.1,)" />-->
   </ItemGroup>
   
   <ItemGroup>
-<!--    <ProjectReference Include="..\Axon.Contracts\Axon.Contracts.csproj" />-->
+    <ProjectReference Include="..\Axon.Contracts\Axon.Contracts.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\assets\Logo-128.png" Pack="true" PackagePath=""/>

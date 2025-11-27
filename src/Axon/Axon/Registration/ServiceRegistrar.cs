@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Axon.Pipeline;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -501,9 +502,12 @@ public static class ServiceRegistrar
   {
     // Use TryAdd, so any existing ServiceFactory/IOrchestrator registration doesn't get overridden
     services.TryAdd(new ServiceDescriptor(typeof(IAxon), serviceConfiguration.OrchestratorImplementationType, serviceConfiguration.Lifetime));
+    services.TryAdd(new ServiceDescriptor(typeof(IMediator), serviceConfiguration.OrchestratorImplementationType, serviceConfiguration.Lifetime));
     services.TryAdd(new ServiceDescriptor(typeof(ISender), sp => sp.GetRequiredService<IAxon>(), serviceConfiguration.Lifetime));
     services.TryAdd(new ServiceDescriptor(typeof(IPublisher), sp => sp.GetRequiredService<IAxon>(), serviceConfiguration.Lifetime));
-
+    services.TryAdd(new ServiceDescriptor(typeof(IAxonSender), sp => sp.GetRequiredService<IAxon>(), serviceConfiguration.Lifetime));
+    services.TryAdd(new ServiceDescriptor(typeof(IAxonPublisher), sp => sp.GetRequiredService<IAxon>(), serviceConfiguration.Lifetime));
+    
     var notificationPublisherServiceDescriptor = serviceConfiguration.NotificationPublisherType != null
       ? new ServiceDescriptor(typeof(INotificationPublisher), serviceConfiguration.NotificationPublisherType, serviceConfiguration.Lifetime)
       : new ServiceDescriptor(typeof(INotificationPublisher), serviceConfiguration.NotificationPublisher);

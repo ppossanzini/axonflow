@@ -1,3 +1,5 @@
+using MediatR;
+
 namespace Axon.Wrappers;
 
 using System;
