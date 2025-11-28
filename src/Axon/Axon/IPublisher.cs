@@ -1,12 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 
 namespace Axon;
 
 /// <summary>
 /// Publish a notification or event through the orchestrator pipeline to be handled by multiple handlers.
 /// </summary>
-public interface IPublisher
+public interface IAxonPublisher
 {
     /// <summary>
     /// Asynchronously send a notification to multiple handlers

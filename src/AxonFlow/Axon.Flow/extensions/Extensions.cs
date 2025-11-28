@@ -40,6 +40,7 @@ namespace Microsoft.Extensions.DependencyInjection
     public static IServiceCollection AddAxonFlowPerformanceMonitor(this IServiceCollection services)
     {
         services.AddTransient<global::Axon.Flow.IPerformanceMonitor, PerformanceMonitor>();
+        
         return services;
     }
 

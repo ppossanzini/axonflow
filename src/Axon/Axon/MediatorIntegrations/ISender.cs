@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+using Axon;
 
-namespace Axon;
+namespace MediatR;
 
 /// <summary>
-/// Send a request through the orchestrator pipeline to be handled by a single handler.
+/// Send a request through the mediator pipeline to be handled by a single handler.
 /// </summary>
-public interface IAxonSender
+public interface ISender
 {
     /// <summary>
     /// Asynchronously send a request to a single handler
@@ -34,7 +34,7 @@ public interface IAxonSender
     /// <param name="request">Request object</param>
     /// <param name="cancellationToken">Optional cancellation token</param>
     /// <returns>A task that represents the send operation. The task result contains the type erased handler response</returns>
-    Task<object?> SendObject(object request, CancellationToken cancellationToken = default);
+    Task<object?> Send(object request, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Create a stream via a single stream handler

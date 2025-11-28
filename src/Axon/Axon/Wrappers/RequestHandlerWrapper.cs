@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Axon.Wrappers;
