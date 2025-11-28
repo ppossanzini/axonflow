@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 
 
 namespace Axon;
@@ -27,7 +28,8 @@ public interface IAxonSender
     /// <returns>A task that represents the send operation.</returns>
     Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default)
         where TRequest : MediatR.IRequest;
-
+    
+    
     /// <summary>
     /// Asynchronously send an object request to a single handler via dynamic dispatch
     /// </summary>
@@ -44,12 +46,13 @@ public interface IAxonSender
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     IAsyncEnumerable<TResponse> CreateStream<TResponse>(MediatR.IStreamRequest<TResponse> request, CancellationToken cancellationToken = default);
-
+    
+    
     /// <summary>
     /// Create a stream via an object request to a stream handler
     /// </summary>
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    IAsyncEnumerable<object?> CreateStream(object request, CancellationToken cancellationToken = default);
+    IAsyncEnumerable<object?> CreateStreamObject(object request, CancellationToken cancellationToken = default);
 }

@@ -151,7 +151,7 @@ namespace Axon.Flow.Kafka
     /// <param name="request">The request object.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A Task representing the asynchronous operation.</returns>
-    public async Task Notify<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : INotification
+    public async Task Notify<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : MediatR.INotification
     {
       var internalQueue = typeof(TRequest).AxonTypeName(_axonflowOptions);
       string queueName = (request as IRouteTo)?.RouteTo(internalQueue);

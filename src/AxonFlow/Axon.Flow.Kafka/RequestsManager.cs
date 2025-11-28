@@ -192,7 +192,7 @@ namespace Axon.Flow.Kafka
             {
               Exception = ex,
               OriginaStackTrace = ex.StackTrace?.ToString(),
-              Status = Messages.StatusEnum.Exception, Content = Unit.Value
+              Status = Messages.StatusEnum.Exception, Content = MediatR.Unit.Value
             },
             CorrelationId = message.CorrelationId
           }

@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Axon.Wrappers;
@@ -20,7 +19,7 @@ public abstract class RequestHandlerBase
   /// <param name="cancellationToken">A token to observe cancellation requests.</param>
   /// <returns>A task that represents the asynchronous operation. The task result contains the response object, or null if no response is returned.</returns>
   public abstract Task<object?> Handle(object request, IServiceProvider serviceProvider,
-        CancellationToken cancellationToken);
+    CancellationToken cancellationToken);
 }
 
 /// <summary>
@@ -37,7 +36,7 @@ public abstract class RequestHandlerWrapper<TResponse> : RequestHandlerBase
   /// <param name="cancellationToken">A token to monitor for cancellation requests during request processing.</param>
   /// <returns>A task that represents the asynchronous operation. The task result contains the response of the request.</returns>
   public abstract Task<TResponse> Handle(MediatR.IRequest<TResponse> request, IServiceProvider serviceProvider,
-        CancellationToken cancellationToken);
+    CancellationToken cancellationToken);
 }
 
 /// <summary>
@@ -53,7 +52,7 @@ public abstract class RequestHandlerWrapper : RequestHandlerBase
   /// <param name="cancellationToken">A token to observe cancellation requests.</param>
   /// <returns>A task that represents the asynchronous operation. The task result contains an instance of Unit, indicating the completion of the handling process.</returns>
   public abstract Task<MediatR.Unit> Handle(MediatR.IRequest request, IServiceProvider serviceProvider,
-        CancellationToken cancellationToken);
+    CancellationToken cancellationToken);
 }
 
 /// <summary>
@@ -63,7 +62,7 @@ public abstract class RequestHandlerWrapper : RequestHandlerBase
 /// <typeparam name="TRequest">The type of the request handled by this wrapper.</typeparam>
 /// <typeparam name="TResponse">The type of the response produced by this wrapper.</typeparam>
 public class RequestHandlerWrapperImpl<TRequest, TResponse> : RequestHandlerWrapper<TResponse>
-    where TRequest : MediatR.IRequest<TResponse>
+  where TRequest : MediatR.IRequest<TResponse>
 {
   /// <summary>
   /// Handles a request by delegating it to the appropriate service and processing any attached pipeline behaviors.
@@ -73,8 +72,8 @@ public class RequestHandlerWrapperImpl<TRequest, TResponse> : RequestHandlerWrap
   /// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete or to cancel the operation.</param>
   /// <returns>A task that represents the asynchronous handling operation. The task result contains the response object or null if no response is provided.</returns>
   public override async Task<object?> Handle(object request, IServiceProvider serviceProvider,
-        CancellationToken cancellationToken) =>
-        await Handle((MediatR.IRequest<TResponse>) request, serviceProvider, cancellationToken).ConfigureAwait(false);
+    CancellationToken cancellationToken) =>
+    await Handle((MediatR.IRequest<TResponse>)request, serviceProvider, cancellationToken).ConfigureAwait(false);
 
   /// <summary>
   /// Handles the provided request asynchronously using the specified service provider and cancellation token,
@@ -85,17 +84,18 @@ public class RequestHandlerWrapperImpl<TRequest, TResponse> : RequestHandlerWrap
   /// <param name="cancellationToken">A token to observe while waiting for the operation to complete.</param>
   /// <returns>A task representing the asynchronous operation, with the result being the response object of type <typeparamref name="TResponse"/>.</returns>
   public override Task<TResponse> Handle(MediatR.IRequest<TResponse> request, IServiceProvider serviceProvider,
-        CancellationToken cancellationToken)
-    {
-        Task<TResponse> Handler(CancellationToken t = default) => serviceProvider.GetRequiredService<MediatR.IRequestHandler<TRequest, TResponse>>()
-            .Handle((TRequest) request, t == default ? cancellationToken : t);
+    CancellationToken cancellationToken)
+  {
+    Task<TResponse> Handler(CancellationToken t = default) =>
+      (serviceProvider.GetService<MediatR.IRequestHandler<TRequest, TResponse>>() ??
+       serviceProvider.GetRequiredService<IRequestHandler<TRequest, TResponse>>())
+      .Handle((TRequest)request, t == default ? cancellationToken : t);
 
-        return serviceProvider
-            .GetServices<MediatR.IPipelineBehavior<TRequest, TResponse>>()
-            .Reverse()
-            .Aggregate((MediatR.RequestHandlerDelegate<TResponse>) Handler,
-                (next, pipeline) => (t) => pipeline.Handle((TRequest) request, next, t == default ? cancellationToken : t))();
-    }
+    return serviceProvider.GetServices<MediatR.IPipelineBehavior<TRequest, TResponse>>()
+      .Reverse()
+      .Aggregate((MediatR.RequestHandlerDelegate<TResponse>)Handler,
+        (next, pipeline) => (t) => pipeline.Handle((TRequest)request, next, t == default ? cancellationToken : t))();
+  }
 }
 
 /// <summary>
@@ -103,7 +103,7 @@ public class RequestHandlerWrapperImpl<TRequest, TResponse> : RequestHandlerWrap
 /// for processing requests without defined response types.
 /// </summary>
 public class RequestHandlerWrapperImpl<TRequest> : RequestHandlerWrapper
-    where TRequest : MediatR.IRequest
+  where TRequest : MediatR.IRequest
 {
   /// <summary>
   /// Handles a request by invoking the appropriate handler logic with the provided request and service dependencies.
@@ -113,8 +113,8 @@ public class RequestHandlerWrapperImpl<TRequest> : RequestHandlerWrapper
   /// <param name="cancellationToken">A token used to observe cancellation requests during the operation.</param>
   /// <returns>A task that represents the asynchronous operation. The task result contains the response object, or null if no result is produced.</returns>
   public override async Task<object?> Handle(object request, IServiceProvider serviceProvider,
-        CancellationToken cancellationToken) =>
-        await Handle((MediatR.IRequest) request, serviceProvider, cancellationToken).ConfigureAwait(false);
+    CancellationToken cancellationToken) =>
+    await Handle((MediatR.IRequest)request, serviceProvider, cancellationToken).ConfigureAwait(false);
 
   /// <summary>
   /// Handles a request by executing the configured request handling process
@@ -125,20 +125,20 @@ public class RequestHandlerWrapperImpl<TRequest> : RequestHandlerWrapper
   /// <param name="cancellationToken">A token to observe cancellation requests during the handling process.</param>
   /// <returns>A task that represents the asynchronous operation. The task result is a unit indicating successful completion of the process.</returns>
   public override Task<MediatR.Unit> Handle(MediatR.IRequest request, IServiceProvider serviceProvider,
-        CancellationToken cancellationToken)
+    CancellationToken cancellationToken)
+  {
+    async Task<MediatR.Unit> Handler(CancellationToken t = default)
     {
-        async Task<MediatR.Unit> Handler(CancellationToken t = default)
-        {
-            await serviceProvider.GetRequiredService<MediatR.IRequestHandler<TRequest>>()
-                .Handle((TRequest) request, t == default ? cancellationToken : t);
+      await (serviceProvider.GetService<MediatR.IRequestHandler<TRequest>>() ??
+             serviceProvider.GetRequiredService<IRequestHandler<TRequest>>())
+        .Handle((TRequest)request, t == default ? cancellationToken : t);
 
-            return MediatR.Unit.Value;
-        }
-
-        return serviceProvider
-            .GetServices<MediatR.IPipelineBehavior<TRequest, MediatR.Unit>>()
-            .Reverse()
-            .Aggregate((MediatR.RequestHandlerDelegate<MediatR.Unit>) Handler,
-                (next, pipeline) => (t) => pipeline.Handle((TRequest) request, next, t == default ? cancellationToken : t))();
+      return MediatR.Unit.Value;
     }
+
+    return serviceProvider.GetServices<MediatR.IPipelineBehavior<TRequest, MediatR.Unit>>()
+      .Reverse()
+      .Aggregate((MediatR.RequestHandlerDelegate<MediatR.Unit>)Handler,
+        (next, pipeline) => (t) => pipeline.Handle((TRequest)request, next, t == default ? cancellationToken : t))();
+  }
 }

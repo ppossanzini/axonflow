@@ -101,7 +101,7 @@ namespace Axon.Flow.GRPC
     /// <param name="request">The request message to send.</param>
     /// <param name="cancellationToken">A cancellation token to cancel the notification operation.</param>
     /// <returns>A task representing the asynchronous notification operation.</returns>
-    public Task Notify<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : INotification
+    public Task Notify<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : MediatR.INotification
     {
       var internalQueue = typeof(TRequest).AxonTypeName(routerOptions);
       // ReSharper disable once SuspiciousTypeConversion.Global

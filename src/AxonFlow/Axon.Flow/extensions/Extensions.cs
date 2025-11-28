@@ -30,7 +30,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
       if (configure != null)
         services.Configure<RouterOptions>(configure);
-      services.AddScoped(typeof(IPipelineBehavior<,>), typeof(Axon.Flow.Pipelines.RouterPipeline<,>));
+      services.AddScoped(typeof(MediatR.IPipelineBehavior<,>), typeof(Axon.Flow.Pipelines.RouterPipeline<,>));
       services.AddSingleton<IRouter, global::Axon.Flow.Router>();
 
       services.AddTransient<global::Axon.IAxon, AxonFlow>();
@@ -75,7 +75,7 @@ namespace Microsoft.Extensions.DependencyInjection
       var localRequests = assemblies.SelectMany(a => a
         .GetTypes()
         .SelectMany(t => t.GetInterfaces()
-          .Where(i => i.FullName != null && i.FullName.StartsWith("Axon.IRequestHandler"))
+          .Where(i => i.FullName != null && (i.FullName.StartsWith("Axon.IRequestHandler") || i.FullName.StartsWith("MediatR.IRequestHandler")))
           .Select(i => i.GetGenericArguments()[0]).ToArray()
         ));
       options.SetAsLocalRequests(localRequests.ToArray, queuePrefix, logger);
@@ -99,7 +99,7 @@ namespace Microsoft.Extensions.DependencyInjection
       var localNotifications = assemblies.SelectMany(a => a
         .GetTypes()
         .SelectMany(t => t.GetInterfaces()
-          .Where(i => i.FullName != null && i.FullName.StartsWith("Axon.INotificationHandler"))
+          .Where(i => i.FullName != null && (i.FullName.StartsWith("Axon.INotificationHandler") || i.FullName.StartsWith("MediatR.IRequestHandler")))
           .Select(i => i.GetGenericArguments()[0]).ToArray()
         ));
 
@@ -117,7 +117,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <param name="logger">Logger instance to allow information during configuration</param>
     /// <returns>The modified AxonFlowOptions object.</returns>
     public static RouterOptions SetAsLocalRequest<T>(this RouterOptions options, string queuePrefix = null, ILogger logger = null)
-      where T : IBaseRequest
+      where T : MediatR.IBaseRequest
     {
       options.LocalTypes.Add(typeof(T));
 
@@ -137,7 +137,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <returns>The updated AxonFlowOptions instance with the notification added to the local requests list.</returns>
     /// /
     public static RouterOptions ListenForNotification<T>(this RouterOptions options, string queuePrefix = null, ILogger logger = null)
-      where T : INotification
+      where T : MediatR.INotification
     {
       options.LocalTypes.Add(typeof(T));
 
@@ -159,7 +159,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <param name="logger">Logger instance to allow information during configuration</param>
     /// <returns>The modified <see cref="RouterOptions"/> instance.</returns>
     public static RouterOptions SetAsRemoteRequest<T>(this RouterOptions options, string queuePrefix = null, ILogger logger = null)
-      where T : IBaseRequest
+      where T : MediatR.IBaseRequest
     {
       options.RemoteTypes.Add(typeof(T));
 
@@ -186,7 +186,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
       var types = (from a in assemblySelect()
         from t in a.GetTypes()
-        where typeof(IBaseRequest).IsAssignableFrom(t) || typeof(INotification).IsAssignableFrom(t)
+        where typeof(MediatR.IBaseRequest).IsAssignableFrom(t) || typeof(MediatR.INotification).IsAssignableFrom(t)
         select t).AsEnumerable();
 
       foreach (var t in types)
@@ -241,7 +241,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
       var types = (from a in assemblySelect()
         from t in a.GetTypes()
-        where typeof(IBaseRequest).IsAssignableFrom(t) || typeof(INotification).IsAssignableFrom(t)
+        where typeof(MediatR.IBaseRequest).IsAssignableFrom(t) || typeof(MediatR.INotification).IsAssignableFrom(t)
         select t).AsEnumerable();
       foreach (var t in types)
         options.RemoteTypes.Add(t);
@@ -297,7 +297,7 @@ namespace Microsoft.Extensions.DependencyInjection
     public static RouterOptions SetNotificationPrefix(this RouterOptions options, Func<IEnumerable<Type>> typesSelect, string queuePrefix,
       ILogger logger = null)
     {
-      var types = typesSelect().Where(t => typeof(INotification).IsAssignableFrom(t));
+      var types = typesSelect().Where(t => typeof(MediatR.INotification).IsAssignableFrom(t));
       if (!types.Any())
         logger?.LogWarning("SetNotificationPrefix : No Notification classes found in assemblies");
 
@@ -314,7 +314,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
     public static bool IsNotification(this Type t)
     {
-      return typeof(INotification).IsAssignableFrom(t) && !typeof(IBaseRequest).IsAssignableFrom(t);
+      return typeof(MediatR.INotification).IsAssignableFrom(t) && !typeof(MediatR.IBaseRequest).IsAssignableFrom(t);
     }
 
     public static RouterOptions SetTypeQueueName<T>(this RouterOptions options, string queueName)
@@ -359,7 +359,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
       var types = (from a in assemblySelect()
         from t in a.GetTypes()
-        where typeof(INotification).IsAssignableFrom(t)
+        where typeof(MediatR.INotification).IsAssignableFrom(t)
         select t).AsEnumerable();
 
       if (!types.Any())

@@ -35,7 +35,7 @@ namespace Axon.Flow
     /// <returns>
     /// <see langword="true"/> if the specified type has a local handler registered; otherwise, <see langword="false"/>.
     /// </returns>
-    public bool HasLocalHandler<T>() where T : IBaseRequest => this.HasLocalHandler(typeof(T));
+    public bool HasLocalHandler<T>() where T : MediatR.IBaseRequest => this.HasLocalHandler(typeof(T));
 
     /// <summary>
     /// Checks if the given type has a local handler registered.
@@ -51,7 +51,7 @@ namespace Axon.Flow
     /// <returns>
     /// <c>true</c> if the specified type has a remote handler; otherwise, <c>false</c>.
     /// </returns>
-    public bool HasRemoteHandler<T>() where T : IBaseRequest => this.HasRemoteHandler(typeof(T));
+    public bool HasRemoteHandler<T>() where T : MediatR.IBaseRequest => this.HasRemoteHandler(typeof(T));
 
     /// <summary>
     /// Checks if the given type has a remote handler.
@@ -129,7 +129,7 @@ namespace Axon.Flow
     /// <typeparam name="TRequest">The type of the notification.</typeparam>
     /// <param name="request">The notification request to send.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public Task SendRemoteNotification<TRequest>(TRequest request) where TRequest : INotification
+    public Task SendRemoteNotification<TRequest>(TRequest request) where TRequest : MediatR.INotification
     {
       _logger.LogDebug($"Invoking remote handler for: {typeof(TRequest).AxonTypeName(_options)}");
       Task.WaitAll(_messageDispatchers.Select(i => i.Notify(request)).ToArray());
