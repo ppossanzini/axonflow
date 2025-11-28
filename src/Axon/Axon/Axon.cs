@@ -1,5 +1,5 @@
 using Axon.NotificationPublishers;
-using MediatR;
+
 
 namespace Axon;
 
@@ -14,10 +14,10 @@ using Wrappers;
 /// <summary>
 /// Default orchestrator implementation relying on single- and multi instance delegates for resolving handlers.
 /// </summary>
-public class Axon : IAxon, IMediator
+public class Axon : IAxon, MediatR.IMediator
 {
   private readonly IServiceProvider _serviceProvider;
-  private readonly INotificationPublisher _publisher;
+  private readonly MediatR.INotificationPublisher _publisher;
   private static readonly ConcurrentDictionary<Type, RequestHandlerBase> _requestHandlers = new();
   private static readonly ConcurrentDictionary<Type, NotificationHandlerWrapper> _notificationHandlers = new();
   private static readonly ConcurrentDictionary<Type, StreamRequestHandlerBase> _streamRequestHandlers = new();
@@ -36,7 +36,7 @@ public class Axon : IAxon, IMediator
   /// </summary>
   /// <param name="serviceProvider">Service provider. Can be a scoped or root provider</param>
   /// <param name="publisher">Notification publisher. Defaults to <see cref="ForeachAwaitPublisher"/>.</param>
-  public Axon(IServiceProvider serviceProvider, INotificationPublisher publisher)
+  public Axon(IServiceProvider serviceProvider, MediatR.INotificationPublisher publisher)
   {
     _serviceProvider = serviceProvider;
     _publisher = publisher;
@@ -49,7 +49,7 @@ public class Axon : IAxon, IMediator
   /// <param name="request">The request to be processed. Cannot be null.</param>
   /// <param name="cancellationToken">A cancellation token to observe while waiting for the request to be handled.</param>
   /// <returns>A task representing the asynchronous operation, containing the response from the request handler.</returns>
-  public Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken = default)
+  public Task<TResponse> Send<TResponse>(MediatR.IRequest<TResponse> request, CancellationToken cancellationToken = default)
   {
     if (request == null)
     {
@@ -76,7 +76,7 @@ public class Axon : IAxon, IMediator
   /// <exception cref="ArgumentNullException">Thrown if the request is null.</exception>
   /// <exception cref="InvalidOperationException">Thrown if no handler could be created for the request type.</exception>
   public Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default)
-    where TRequest : IRequest
+    where TRequest : MediatR.IRequest
   {
     if (request == null)
     {
@@ -121,13 +121,13 @@ public class Axon : IAxon, IMediator
     {
       Type wrapperType;
 
-      var requestInterfaceType = requestType.GetInterfaces().FirstOrDefault(static i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequest<>));
+      var requestInterfaceType = requestType.GetInterfaces().FirstOrDefault(static i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(MediatR.IRequest<>));
       if (requestInterfaceType is null)
       {
-        requestInterfaceType = requestType.GetInterfaces().FirstOrDefault(static i => i == typeof(IRequest));
+        requestInterfaceType = requestType.GetInterfaces().FirstOrDefault(static i => i == typeof(MediatR.IRequest));
         if (requestInterfaceType is null)
         {
-          throw new ArgumentException($"{requestType.Name} does not implement {nameof(IRequest)}", nameof(request));
+          throw new ArgumentException($"{requestType.Name} does not implement {nameof(MediatR.IRequest)}", nameof(request));
         }
 
         wrapperType = typeof(RequestHandlerWrapperImpl<>).MakeGenericType(requestType);
@@ -168,7 +168,7 @@ public class Axon : IAxon, IMediator
   /// <returns>A task that represents the asynchronous publish operation.</returns>
   /// <exception cref="ArgumentNullException">Thrown when the notification is null.</exception>
   public Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default)
-    where TNotification : INotification
+    where TNotification : MediatR.INotification
   {
     if (notification == null)
     {
@@ -190,8 +190,8 @@ public class Axon : IAxon, IMediator
     notification switch
     {
       null => throw new ArgumentNullException(nameof(notification)),
-      INotification instance => PublishNotification(instance, cancellationToken),
-      _ => throw new ArgumentException($"{nameof(notification)} does not implement ${nameof(INotification)}")
+      MediatR.INotification instance => PublishNotification(instance, cancellationToken),
+      _ => throw new ArgumentException($"{nameof(notification)} does not implement ${nameof(MediatR.INotification)}")
     };
 
   /// <summary>
@@ -201,10 +201,10 @@ public class Axon : IAxon, IMediator
   /// <param name="notification">The notification being published</param>
   /// <param name="cancellationToken">The cancellation token</param>
   /// <returns>A task representing invoking all handlers</returns>
-  protected virtual Task PublishCore(IEnumerable<NotificationHandlerExecutor> handlerExecutors, INotification notification, CancellationToken cancellationToken)
+  protected virtual Task PublishCore(IEnumerable<MediatR.NotificationHandlerExecutor> handlerExecutors, MediatR.INotification notification, CancellationToken cancellationToken)
     => _publisher.Publish(handlerExecutors, notification, cancellationToken);
 
-  private Task PublishNotification(INotification notification, CancellationToken cancellationToken = default)
+  private Task PublishNotification(MediatR.INotification notification, CancellationToken cancellationToken = default)
   {
     var handler = _notificationHandlers.GetOrAdd(notification.GetType(), static notificationType =>
     {
@@ -224,7 +224,7 @@ public class Axon : IAxon, IMediator
   /// <param name="request">The stream request to process.</param>
   /// <param name="cancellationToken">A token for observing cancellation requests.</param>
   /// <returns>An asynchronous stream of responses provided by the stream request handler.</returns>
-  public IAsyncEnumerable<TResponse> CreateStream<TResponse>(IStreamRequest<TResponse> request, CancellationToken cancellationToken = default)
+  public IAsyncEnumerable<TResponse> CreateStream<TResponse>(MediatR.IStreamRequest<TResponse> request, CancellationToken cancellationToken = default)
   {
     if (request == null)
     {
@@ -263,7 +263,7 @@ public class Axon : IAxon, IMediator
     var handler = _streamRequestHandlers.GetOrAdd(request.GetType(), static requestType =>
     {
       var requestInterfaceType = requestType.GetInterfaces()
-        .FirstOrDefault(static i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IStreamRequest<>));
+        .FirstOrDefault(static i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(MediatR.IStreamRequest<>));
       if (requestInterfaceType is null)
       {
         throw new ArgumentException($"{requestType.Name} does not implement IStreamRequest<TResponse>", nameof(request));

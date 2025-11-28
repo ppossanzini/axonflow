@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
-namespace Axon;
+namespace MediatR;
 
 /// <summary>
 /// Represents an executor for handling notifications, containing a specific handler instance
@@ -17,4 +17,4 @@ namespace Axon;
 /// It accepts an <see cref="INotification"/> and a <see cref="CancellationToken"/> as parameters
 /// and returns a <see cref="Task"/> representing the asynchronous operation.
 /// </param>
-public record NotificationHandlerExecutor(object HandlerInstance, Func<MediatR.INotification, CancellationToken, Task> HandlerCallback): MediatR.NotificationHandlerExecutor(HandlerInstance, HandlerCallback);
+public record NotificationHandlerExecutor(object HandlerInstance, Func<MediatR.INotification, CancellationToken, Task> HandlerCallback);
