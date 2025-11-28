@@ -22,8 +22,6 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\AxonFlow.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-
-
   <ItemGroup>
     <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.9" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
