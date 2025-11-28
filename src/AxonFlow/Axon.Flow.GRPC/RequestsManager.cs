@@ -96,7 +96,7 @@ namespace Axon.Flow.GRPC
           {
             Exception = ex,
             OriginaStackTrace = ex.StackTrace,
-            Status = StatusEnum.Exception, Content = Unit.Value
+            Status = StatusEnum.Exception, Content = MediatR.Unit.Value
           },
           _options.SerializerSettings);
         _logger.LogError(ex, $"Error executing message of type {typeof(T)} from external service");

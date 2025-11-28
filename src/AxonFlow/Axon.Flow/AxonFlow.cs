@@ -45,7 +45,7 @@ namespace Axon.Flow
     /// <param name="notification">The notification to publish.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    protected override async Task PublishCore(IEnumerable<NotificationHandlerExecutor> handlerExecutors, INotification notification,
+    protected override async Task PublishCore(IEnumerable<MediatR.NotificationHandlerExecutor> handlerExecutors, MediatR.INotification notification,
       CancellationToken cancellationToken)
     {
       var not = notification;

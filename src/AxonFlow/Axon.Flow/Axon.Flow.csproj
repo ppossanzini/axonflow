@@ -28,14 +28,16 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.2"/>
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.2"/>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
-    <PackageReference Include="AxonFlow.Contracts" Version="[9.3.1,)" />
-    <PackageReference Include="AxonFlow" Version="[9.4.1,)"/>
+<!--    <PackageReference Include="AxonFlow.Contracts" Version="[9.5.1,)" />-->
+<!--    <PackageReference Include="AxonFlow" Version="[9.5.0-preview,)"/>-->
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\assets\Logo-128.png" Pack="true" PackagePath=""/>
   </ItemGroup>
-<!--  <ItemGroup>-->
-<!--    <ProjectReference Include="..\..\Axon\Axon\Axon.csproj" />-->
-<!--  </ItemGroup>-->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Axon\Axon.Contracts\Axon.Contracts.csproj" />
+    <ProjectReference Include="..\..\Axon\Axon\Axon.csproj" />
+  </ItemGroup>
+
 </Project>
 

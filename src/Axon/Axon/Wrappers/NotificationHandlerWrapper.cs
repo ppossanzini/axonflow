@@ -1,4 +1,3 @@
-
 namespace Axon.Wrappers;
 
 using System;
@@ -25,8 +24,8 @@ public abstract class NotificationHandlerWrapper
   /// <param name="cancellationToken">A token for cancelling the operation if required.</param>
   /// <returns>A task that represents the asynchronous handling operation.</returns>
   public abstract Task Handle(MediatR.INotification notification, IServiceProvider serviceFactory,
-        Func<IEnumerable<MediatR.NotificationHandlerExecutor>, MediatR.INotification, CancellationToken, Task> publish,
-        CancellationToken cancellationToken);
+    Func<IEnumerable<MediatR.NotificationHandlerExecutor>, MediatR.INotification, CancellationToken, Task> publish,
+    CancellationToken cancellationToken);
 }
 
 /// <summary>
@@ -38,7 +37,7 @@ public abstract class NotificationHandlerWrapper
 /// Must implement the <see cref="INotification"/> interface.
 /// </typeparam>
 public class NotificationHandlerWrapperImpl<TNotification> : NotificationHandlerWrapper
-    where TNotification : MediatR.INotification
+  where TNotification : MediatR.INotification
 {
   /// <summary>
   /// Handles the processing of a given notification by invoking the appropriate notification handlers
@@ -52,13 +51,15 @@ public class NotificationHandlerWrapperImpl<TNotification> : NotificationHandler
   /// <param name="cancellationToken">A token that propagates notification that the operation should be canceled.</param>
   /// <returns>A task representing the asynchronous handling operation.</returns>
   public override Task Handle(MediatR.INotification notification, IServiceProvider serviceFactory,
-        Func<IEnumerable<MediatR.NotificationHandlerExecutor>, MediatR.INotification, CancellationToken, Task> publish,
-        CancellationToken cancellationToken)
-    {
-        var handlers = serviceFactory
-            .GetServices<MediatR.INotificationHandler<TNotification>>()
-            .Select(static x => new MediatR.NotificationHandlerExecutor(x, (theNotification, theToken) => x.Handle((TNotification)theNotification, theToken)));
+    Func<IEnumerable<MediatR.NotificationHandlerExecutor>, MediatR.INotification, CancellationToken, Task> publish,
+    CancellationToken cancellationToken)
+  {
+    var handlers =
+      serviceFactory.GetServices<MediatR.INotificationHandler<TNotification>>()
+        .Concat(serviceFactory.GetServices<INotificationHandler<TNotification>>())
+        .Select(static x => new MediatR.NotificationHandlerExecutor(x,
+          (theNotification, theToken) => x.Handle((TNotification)theNotification, theToken)));
 
-        return publish(handlers, notification, cancellationToken);
-    }
+    return publish(handlers, notification, cancellationToken);
+  }
 }

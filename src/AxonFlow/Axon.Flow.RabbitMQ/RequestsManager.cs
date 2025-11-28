@@ -278,7 +278,7 @@ namespace Axon.Flow.RabbitMQ
           {
             Exception = ex,
             OriginaStackTrace = ex.StackTrace?.ToString(),
-            Status = Messages.StatusEnum.Exception, Content = Unit.Value
+            Status = Messages.StatusEnum.Exception, Content = MediatR.Unit.Value
           },
           _options.SerializerSettings);
         _logger.LogError(ex, $"Error executing message of type {typeof(T)} from external service");

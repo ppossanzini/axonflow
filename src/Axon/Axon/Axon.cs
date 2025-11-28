@@ -49,7 +49,8 @@ public class Axon : IAxon, MediatR.IMediator
   /// <param name="request">The request to be processed. Cannot be null.</param>
   /// <param name="cancellationToken">A cancellation token to observe while waiting for the request to be handled.</param>
   /// <returns>A task representing the asynchronous operation, containing the response from the request handler.</returns>
-  public Task<TResponse> Send<TResponse>(MediatR.IRequest<TResponse> request, CancellationToken cancellationToken = default)
+  public Task<TResponse> Send<TResponse>(MediatR.IRequest<TResponse> request,
+    CancellationToken cancellationToken = default)
   {
     if (request == null)
     {
@@ -59,12 +60,14 @@ public class Axon : IAxon, MediatR.IMediator
     var handler = (RequestHandlerWrapper<TResponse>)_requestHandlers.GetOrAdd(request.GetType(), static requestType =>
     {
       var wrapperType = typeof(RequestHandlerWrapperImpl<,>).MakeGenericType(requestType, typeof(TResponse));
-      var wrapper = Activator.CreateInstance(wrapperType) ?? throw new InvalidOperationException($"Could not create wrapper type for {requestType}");
+      var wrapper = Activator.CreateInstance(wrapperType) ??
+                    throw new InvalidOperationException($"Could not create wrapper type for {requestType}");
       return (RequestHandlerBase)wrapper;
     });
 
     return handler.Handle(request, _serviceProvider, cancellationToken);
   }
+
 
   /// <summary>
   /// Sends a request to the appropriate handler and returns a task representing the asynchronous operation.
@@ -86,7 +89,8 @@ public class Axon : IAxon, MediatR.IMediator
     var handler = (RequestHandlerWrapper)_requestHandlers.GetOrAdd(request.GetType(), static requestType =>
     {
       var wrapperType = typeof(RequestHandlerWrapperImpl<>).MakeGenericType(requestType);
-      var wrapper = Activator.CreateInstance(wrapperType) ?? throw new InvalidOperationException($"Could not create wrapper type for {requestType}");
+      var wrapper = Activator.CreateInstance(wrapperType) ??
+                    throw new InvalidOperationException($"Could not create wrapper type for {requestType}");
       return (RequestHandlerBase)wrapper;
     });
 
@@ -121,13 +125,15 @@ public class Axon : IAxon, MediatR.IMediator
     {
       Type wrapperType;
 
-      var requestInterfaceType = requestType.GetInterfaces().FirstOrDefault(static i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(MediatR.IRequest<>));
+      var requestInterfaceType = requestType.GetInterfaces().FirstOrDefault(static i =>
+        i.IsGenericType && i.GetGenericTypeDefinition() == typeof(MediatR.IRequest<>));
       if (requestInterfaceType is null)
       {
         requestInterfaceType = requestType.GetInterfaces().FirstOrDefault(static i => i == typeof(MediatR.IRequest));
         if (requestInterfaceType is null)
         {
-          throw new ArgumentException($"{requestType.Name} does not implement {nameof(MediatR.IRequest)}", nameof(request));
+          throw new ArgumentException($"{requestType.Name} does not implement {nameof(MediatR.IRequest)}",
+            nameof(request));
         }
 
         wrapperType = typeof(RequestHandlerWrapperImpl<>).MakeGenericType(requestType);
@@ -138,14 +144,16 @@ public class Axon : IAxon, MediatR.IMediator
         wrapperType = typeof(RequestHandlerWrapperImpl<,>).MakeGenericType(requestType, responseType);
       }
 
-      var wrapper = Activator.CreateInstance(wrapperType) ?? throw new InvalidOperationException($"Could not create wrapper for type {requestType}");
+      var wrapper = Activator.CreateInstance(wrapperType) ??
+                    throw new InvalidOperationException($"Could not create wrapper for type {requestType}");
       return (RequestHandlerBase)wrapper;
     });
 
     // call via dynamic dispatch to avoid calling through reflection for performance reasons
     return handler.Handle(request, _serviceProvider, cancellationToken);
   }
-  
+
+
   /// <summary>
   /// Publishes an object as a notification.
   /// </summary>
@@ -201,7 +209,8 @@ public class Axon : IAxon, MediatR.IMediator
   /// <param name="notification">The notification being published</param>
   /// <param name="cancellationToken">The cancellation token</param>
   /// <returns>A task representing invoking all handlers</returns>
-  protected virtual Task PublishCore(IEnumerable<MediatR.NotificationHandlerExecutor> handlerExecutors, MediatR.INotification notification, CancellationToken cancellationToken)
+  protected virtual Task PublishCore(IEnumerable<MediatR.NotificationHandlerExecutor> handlerExecutors,
+    MediatR.INotification notification, CancellationToken cancellationToken)
     => _publisher.Publish(handlerExecutors, notification, cancellationToken);
 
   private Task PublishNotification(MediatR.INotification notification, CancellationToken cancellationToken = default)
@@ -209,7 +218,8 @@ public class Axon : IAxon, MediatR.IMediator
     var handler = _notificationHandlers.GetOrAdd(notification.GetType(), static notificationType =>
     {
       var wrapperType = typeof(NotificationHandlerWrapperImpl<>).MakeGenericType(notificationType);
-      var wrapper = Activator.CreateInstance(wrapperType) ?? throw new InvalidOperationException($"Could not create wrapper for type {notificationType}");
+      var wrapper = Activator.CreateInstance(wrapperType) ??
+                    throw new InvalidOperationException($"Could not create wrapper for type {notificationType}");
       return (NotificationHandlerWrapper)wrapper;
     });
 
@@ -224,19 +234,22 @@ public class Axon : IAxon, MediatR.IMediator
   /// <param name="request">The stream request to process.</param>
   /// <param name="cancellationToken">A token for observing cancellation requests.</param>
   /// <returns>An asynchronous stream of responses provided by the stream request handler.</returns>
-  public IAsyncEnumerable<TResponse> CreateStream<TResponse>(MediatR.IStreamRequest<TResponse> request, CancellationToken cancellationToken = default)
+  public IAsyncEnumerable<TResponse> CreateStream<TResponse>(MediatR.IStreamRequest<TResponse> request,
+    CancellationToken cancellationToken = default)
   {
     if (request == null)
     {
       throw new ArgumentNullException(nameof(request));
     }
 
-    var streamHandler = (StreamRequestHandlerWrapper<TResponse>)_streamRequestHandlers.GetOrAdd(request.GetType(), static requestType =>
-    {
-      var wrapperType = typeof(StreamRequestHandlerWrapperImpl<,>).MakeGenericType(requestType, typeof(TResponse));
-      var wrapper = Activator.CreateInstance(wrapperType) ?? throw new InvalidOperationException($"Could not create wrapper for type {requestType}");
-      return (StreamRequestHandlerBase)wrapper;
-    });
+    var streamHandler = (StreamRequestHandlerWrapper<TResponse>)_streamRequestHandlers.GetOrAdd(request.GetType(),
+      static requestType =>
+      {
+        var wrapperType = typeof(StreamRequestHandlerWrapperImpl<,>).MakeGenericType(requestType, typeof(TResponse));
+        var wrapper = Activator.CreateInstance(wrapperType) ??
+                      throw new InvalidOperationException($"Could not create wrapper for type {requestType}");
+        return (StreamRequestHandlerBase)wrapper;
+      });
 
     var items = streamHandler.Handle(request, _serviceProvider, cancellationToken);
 
@@ -253,7 +266,22 @@ public class Axon : IAxon, MediatR.IMediator
   /// <exception cref="ArgumentNullException">Thrown when the <paramref name="request"/> is null.</exception>
   /// <exception cref="ArgumentException">Thrown when the <paramref name="request"/> does not implement <see cref="IStreamRequest{TResponse}"/>.</exception>
   /// <exception cref="InvalidOperationException">Thrown when an appropriate handler for the request cannot be created.</exception>
-  public IAsyncEnumerable<object?> CreateStream(object request, CancellationToken cancellationToken = default)
+  public IAsyncEnumerable<object?> CreateStream(object request,
+    CancellationToken cancellationToken = default)
+  {
+    return CreateStreamObject(request, cancellationToken);
+  }
+
+  /// <summary>
+  /// Creates an asynchronous stream of results based on the specified request.
+  /// </summary>
+  /// <param name="request">The request object to process, which must implement <see cref="IStreamRequest{TResponse}"/>.</param>
+  /// <param name="cancellationToken">A cancellation token that can be used to cancel the asynchronous operation. This parameter is optional.</param>
+  /// <returns>An asynchronous enumerable that streams the results of the operation.</returns>
+  /// <exception cref="ArgumentNullException">Thrown when the <paramref name="request"/> is null.</exception>
+  /// <exception cref="ArgumentException">Thrown when the <paramref name="request"/> does not implement <see cref="IStreamRequest{TResponse}"/>.</exception>
+  /// <exception cref="InvalidOperationException">Thrown when an appropriate handler for the request cannot be created.</exception>
+  public IAsyncEnumerable<object?> CreateStreamObject(object request, CancellationToken cancellationToken = default)
   {
     if (request == null)
     {
@@ -263,15 +291,18 @@ public class Axon : IAxon, MediatR.IMediator
     var handler = _streamRequestHandlers.GetOrAdd(request.GetType(), static requestType =>
     {
       var requestInterfaceType = requestType.GetInterfaces()
-        .FirstOrDefault(static i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(MediatR.IStreamRequest<>));
+        .FirstOrDefault(static i =>
+          i.IsGenericType && i.GetGenericTypeDefinition() == typeof(MediatR.IStreamRequest<>));
       if (requestInterfaceType is null)
       {
-        throw new ArgumentException($"{requestType.Name} does not implement IStreamRequest<TResponse>", nameof(request));
+        throw new ArgumentException($"{requestType.Name} does not implement IStreamRequest<TResponse>",
+          nameof(request));
       }
 
       var responseType = requestInterfaceType.GetGenericArguments()[0];
       var wrapperType = typeof(StreamRequestHandlerWrapperImpl<,>).MakeGenericType(requestType, responseType);
-      var wrapper = Activator.CreateInstance(wrapperType) ?? throw new InvalidOperationException($"Could not create wrapper for type {requestType}");
+      var wrapper = Activator.CreateInstance(wrapperType) ??
+                    throw new InvalidOperationException($"Could not create wrapper for type {requestType}");
       return (StreamRequestHandlerBase)wrapper;
     });
 
