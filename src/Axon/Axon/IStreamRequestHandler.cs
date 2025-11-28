@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading;
-using MediatR;
+
 
 namespace Axon;
 
@@ -9,14 +9,7 @@ namespace Axon;
 /// </summary>
 /// <typeparam name="TRequest">The type of request being handled</typeparam>
 /// <typeparam name="TResponse">The type of response from the handler</typeparam>
-public interface IStreamRequestHandler<in TRequest, out TResponse>
-    where TRequest : IStreamRequest<TResponse>
+public interface IStreamRequestHandler<in TRequest, out TResponse> : MediatR.IStreamRequestHandler<TRequest, TResponse>
+  where TRequest : MediatR.IStreamRequest<TResponse>
 {
-    /// <summary>
-    /// Handles a stream request with IAsyncEnumerable as return type.
-    /// </summary>
-    /// <param name="request">The request</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>Response from the request</returns>
-    IAsyncEnumerable<TResponse> Handle(TRequest request, CancellationToken cancellationToken);
 }

@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+
 
 namespace Axon;
 
@@ -24,5 +24,5 @@ public interface IAxonPublisher
     /// <param name="cancellationToken">Optional cancellation token</param>
     /// <returns>A task that represents the publish operation.</returns>
     Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default)
-        where TNotification : INotification;
+        where TNotification : MediatR.INotification;
 }

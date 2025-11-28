@@ -8,6 +8,7 @@ using Axon.NotificationPublishers;
 using Axon.Pipeline;
 using Axon.Registration;
 
+
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -28,7 +29,7 @@ public class AxonServiceConfiguration
     /// <summary>
     /// Strategy for publishing notifications. Defaults to <see cref="ForeachAwaitPublisher"/>
     /// </summary>
-    public INotificationPublisher NotificationPublisher { get; set; } = new ForeachAwaitPublisher();
+    public MediatR.INotificationPublisher NotificationPublisher { get; set; } = new ForeachAwaitPublisher();
 
     /// <summary>
     /// Type of notification publisher strategy to register. If set, overrides <see cref="NotificationPublisher"/>
@@ -168,11 +169,11 @@ public class AxonServiceConfiguration
     /// <returns>This</returns>
     public AxonServiceConfiguration AddBehavior(Type implementationType, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
     {
-        var implementedGenericInterfaces = implementationType.FindInterfacesThatClose(typeof(IPipelineBehavior<,>)).ToList();
+        var implementedGenericInterfaces = implementationType.FindInterfacesThatClose(typeof(MediatR.IPipelineBehavior<,>)).ToList();
 
         if (implementedGenericInterfaces.Count == 0)
         {
-            throw new InvalidOperationException($"{implementationType.Name} must implement {typeof(IPipelineBehavior<,>).FullName}");
+            throw new InvalidOperationException($"{implementationType.Name} must implement {typeof(MediatR.IPipelineBehavior<,>).FullName}");
         }
 
         foreach (var implementedBehaviorType in implementedGenericInterfaces)
@@ -211,11 +212,11 @@ public class AxonServiceConfiguration
         }
 
         var implementedGenericInterfaces = openBehaviorType.GetInterfaces().Where(i => i.IsGenericType).Select(i => i.GetGenericTypeDefinition());
-        var implementedOpenBehaviorInterfaces = new HashSet<Type>(implementedGenericInterfaces.Where(i => i == typeof(IPipelineBehavior<,>)));
+        var implementedOpenBehaviorInterfaces = new HashSet<Type>(implementedGenericInterfaces.Where(i => i == typeof(MediatR.IPipelineBehavior<,>)));
 
         if (implementedOpenBehaviorInterfaces.Count == 0)
         {
-            throw new InvalidOperationException($"{openBehaviorType.Name} must implement {typeof(IPipelineBehavior<,>).FullName}");
+            throw new InvalidOperationException($"{openBehaviorType.Name} must implement {typeof(MediatR.IPipelineBehavior<,>).FullName}");
         }
 
         foreach (var openBehaviorInterface in implementedOpenBehaviorInterfaces)
@@ -298,11 +299,11 @@ public class AxonServiceConfiguration
     /// <returns>This</returns>
     public AxonServiceConfiguration AddStreamBehavior(Type implementationType, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
     {
-        var implementedGenericInterfaces = implementationType.FindInterfacesThatClose(typeof(IStreamPipelineBehavior<,>)).ToList();
+        var implementedGenericInterfaces = implementationType.FindInterfacesThatClose(typeof(MediatR.IStreamPipelineBehavior<,>)).ToList();
 
         if (implementedGenericInterfaces.Count == 0)
         {
-            throw new InvalidOperationException($"{implementationType.Name} must implement {typeof(IStreamPipelineBehavior<,>).FullName}");
+            throw new InvalidOperationException($"{implementationType.Name} must implement {typeof(MediatR.IStreamPipelineBehavior<,>).FullName}");
         }
 
         foreach (var implementedBehaviorType in implementedGenericInterfaces)
@@ -327,11 +328,11 @@ public class AxonServiceConfiguration
         }
 
         var implementedGenericInterfaces = openBehaviorType.GetInterfaces().Where(i => i.IsGenericType).Select(i => i.GetGenericTypeDefinition());
-        var implementedOpenBehaviorInterfaces = new HashSet<Type>(implementedGenericInterfaces.Where(i => i == typeof(IStreamPipelineBehavior<,>)));
+        var implementedOpenBehaviorInterfaces = new HashSet<Type>(implementedGenericInterfaces.Where(i => i == typeof(MediatR.IStreamPipelineBehavior<,>)));
 
         if (implementedOpenBehaviorInterfaces.Count == 0)
         {
-            throw new InvalidOperationException($"{openBehaviorType.Name} must implement {typeof(IStreamPipelineBehavior<,>).FullName}");
+            throw new InvalidOperationException($"{openBehaviorType.Name} must implement {typeof(MediatR.IStreamPipelineBehavior<,>).FullName}");
         }
 
         foreach (var openBehaviorInterface in implementedOpenBehaviorInterfaces)

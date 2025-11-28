@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+
 
 namespace Axon.NotificationPublishers;
 
@@ -16,7 +16,7 @@ namespace Axon.NotificationPublishers;
 /// return Task.WhenAll(tasks);
 /// </code>
 /// </summary>
-public class TaskWhenAllPublisher : INotificationPublisher
+public class TaskWhenAllPublisher : MediatR.INotificationPublisher
 {
   /// <summary>
   /// Publishes a notification to all provided handler executors by invoking their callback methods
@@ -26,7 +26,7 @@ public class TaskWhenAllPublisher : INotificationPublisher
   /// <param name="notification">The notification to be handled by the executors.</param>
   /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
   /// <returns>A task that represents the asynchronous operation of executing all handler callbacks.</returns>
-  public Task Publish(IEnumerable<NotificationHandlerExecutor> handlerExecutors, INotification notification, CancellationToken cancellationToken)
+  public Task Publish(IEnumerable<MediatR.NotificationHandlerExecutor> handlerExecutors, MediatR.INotification notification, CancellationToken cancellationToken)
     {
         var tasks = handlerExecutors
             .Select(handler => handler.HandlerCallback(notification, cancellationToken))
