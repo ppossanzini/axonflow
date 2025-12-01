@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Authors>Paolo Possanzini</Authors>
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.0;net7.0;net8.0;net9.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <Features>strict</Features>
     <Description>AxonFlow is an open-source fork of MediatR v. 12.5.0</Description>
@@ -30,7 +30,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0"/>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
-<!--    <PackageReference Include="AxonFlow.Contracts" Version="[9.5.0,]" />-->
+    <PackageReference Include="AxonFlow.Contracts" Version="[9.5.1,]" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,9 +39,5 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.9" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Axon.Contracts\Axon.Contracts.csproj" />
-  </ItemGroup>
   
-
 </Project>

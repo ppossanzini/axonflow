@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Axon;
 using Axon.Pipeline;
 using Axon.Registration;
@@ -17,42 +18,66 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// </summary>
 public static class ServiceCollectionExtensions
 {
-    /// <summary>
-    /// Registers handlers and orchestrator types from the specified assemblies
-    /// </summary>
-    /// <param name="services">Service collection</param>
-    /// <param name="configuration">The action used to configure the options</param>
-    /// <returns>Service collection</returns>
-    public static IServiceCollection AddAxon(this IServiceCollection services, 
-        Action<AxonServiceConfiguration> configuration)
+  /// <summary>
+  /// Registers handlers and orchestrator types from the specified assemblies
+  /// </summary>
+  /// <param name="services">Service collection</param>
+  /// <param name="configuration">The action used to configure the options</param>
+  /// <returns>Service collection</returns>
+  public static IServiceCollection AddMediatR(this IServiceCollection services,
+    Action<AxonServiceConfiguration> configuration)
+  {
+    return AddAxon(services, configuration);
+  }
+
+  /// <summary>
+  /// Registers handlers and orchestrator types from the specified assemblies
+  /// </summary>
+  /// <param name="services">Service collection</param>
+  /// <param name="configuration">Configuration options</param>
+  /// <returns>Service collection</returns>
+  public static IServiceCollection AddMediatR(this IServiceCollection services,
+    AxonServiceConfiguration configuration)
+  {
+    return AddAxon(services, configuration);
+  }
+
+  /// <summary>
+  /// Registers handlers and orchestrator types from the specified assemblies
+  /// </summary>
+  /// <param name="services">Service collection</param>
+  /// <param name="configuration">The action used to configure the options</param>
+  /// <returns>Service collection</returns>
+  public static IServiceCollection AddAxon(this IServiceCollection services,
+    Action<AxonServiceConfiguration> configuration)
+  {
+    var serviceConfig = new AxonServiceConfiguration();
+
+    configuration.Invoke(serviceConfig);
+
+    return services.AddAxon(serviceConfig);
+  }
+
+  /// <summary>
+  /// Registers handlers and orchestrator types from the specified assemblies
+  /// </summary>
+  /// <param name="services">Service collection</param>
+  /// <param name="configuration">Configuration options</param>
+  /// <returns>Service collection</returns>
+  public static IServiceCollection AddAxon(this IServiceCollection services,
+    AxonServiceConfiguration configuration)
+  {
+    if (!configuration.AssembliesToRegister.Any())
     {
-        var serviceConfig = new AxonServiceConfiguration();
-
-        configuration.Invoke(serviceConfig);
-
-        return services.AddAxon(serviceConfig);
+      throw new ArgumentException("No assemblies found to scan. Supply at least one assembly to scan for handlers.");
     }
-    
-    /// <summary>
-    /// Registers handlers and orchestrator types from the specified assemblies
-    /// </summary>
-    /// <param name="services">Service collection</param>
-    /// <param name="configuration">Configuration options</param>
-    /// <returns>Service collection</returns>
-    public static IServiceCollection AddAxon(this IServiceCollection services, 
-        AxonServiceConfiguration configuration)
-    {
-        if (!configuration.AssembliesToRegister.Any())
-        {
-            throw new ArgumentException("No assemblies found to scan. Supply at least one assembly to scan for handlers.");
-        }
 
-        ServiceRegistrar.SetGenericRequestHandlerRegistrationLimitations(configuration);
+    ServiceRegistrar.SetGenericRequestHandlerRegistrationLimitations(configuration);
 
-        ServiceRegistrar.AddAxonClassesWithTimeout(services, configuration);
+    ServiceRegistrar.AddAxonClassesWithTimeout(services, configuration);
 
-        ServiceRegistrar.AddRequiredServices(services, configuration);
+    ServiceRegistrar.AddRequiredServices(services, configuration);
 
-        return services;
-    }
+    return services;
+  }
 }

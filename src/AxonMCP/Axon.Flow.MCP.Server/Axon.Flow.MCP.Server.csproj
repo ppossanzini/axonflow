@@ -6,11 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
-<!--    <PackageReference Include="AxonFlow" Version="[9.4.1,)"/>-->
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Axon\Axon\Axon.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0"/>
+    <PackageReference Include="AxonFlow" Version="[9.5.0,)"/>
   </ItemGroup>
 </Project>
