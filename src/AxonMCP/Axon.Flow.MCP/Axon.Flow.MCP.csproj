@@ -6,14 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-<!--    <PackageReference Include="AxonFlow.Contracts" Version="[9.3.1,)"/>-->
-<!--    <PackageReference Include="AxonFlow" Version="[9.4.1,)"/>-->
+    <PackageReference Include="AxonFlow.Contracts" Version="[9.5.1,)"/>
+    <PackageReference Include="AxonFlow" Version="[9.5.0,)"/>
     <PackageReference Include="StreamJsonRpc" Version="2.22.23"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Axon\Axon.Contracts\Axon.Contracts.csproj" />
-    <ProjectReference Include="..\..\Axon\Axon\Axon.csproj" />
-  </ItemGroup>
+
 
 </Project>

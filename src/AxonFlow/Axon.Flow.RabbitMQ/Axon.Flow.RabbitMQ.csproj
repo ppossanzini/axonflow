@@ -16,21 +16,20 @@
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
     <PackageIcon>Logo-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
-    
+
     <PackageId>AxonFlow.Flow.RabbitMQ</PackageId>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\AxonFlow.snk</AssemblyOriginatorKeyFile>
     <AssemblyVersion>10.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="RabbitMQ.Client" Version="7.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.0.0"/>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.9"/>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2"/>
+    <PackageReference Include="AxonFlow.Flow" Version="9.5.0"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Axon.Flow\Axon.Flow.csproj" />
-  </ItemGroup>  <ItemGroup>
-  <None Include="..\..\..\assets\Logo-128.png" Pack="true" PackagePath="" />
-</ItemGroup>
+    <None Include="..\..\..\assets\Logo-128.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Authors>Paolo Possanzini</Authors>
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.0;net7.0;net8.0;net9.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <Features>strict</Features>
     <Description>AxonFlow is an open-source fork of MediatR v. 12.5.0</Description>
