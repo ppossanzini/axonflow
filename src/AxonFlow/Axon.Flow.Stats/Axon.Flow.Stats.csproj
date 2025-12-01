@@ -18,7 +18,6 @@
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
     <PackageIcon>Logo-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
-
     <PackageId>AxonFlow.Flow.Stats</PackageId>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\AxonFlow.snk</AssemblyOriginatorKeyFile>
