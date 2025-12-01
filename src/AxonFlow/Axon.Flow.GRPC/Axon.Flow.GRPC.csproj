@@ -33,10 +33,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-<!--    <PackageReference Include="AxonFlow.Flow" Version="[9.4.1,)" />-->
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Axon.Flow\Axon.Flow.csproj" />
+    <PackageReference Include="AxonFlow.Flow" Version="[9.5.0,)" />
   </ItemGroup>
   <ItemGroup>
     <Protobuf Include="Protos\RequestsManager.proto" GrpcServices="Both"/>
