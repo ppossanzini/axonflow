@@ -4,11 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Axon;
-using Axon.Flow;
-using Axon.Flow.Messages;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
+using Hikyaku.Kaido.Messages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -86,7 +84,7 @@ namespace Hikyaku.Kaido.GRPC
         var message = JsonConvert.DeserializeObject<T>(msg, _options.SerializerSettings);
 
 
-        var orchestrator = _provider.CreateScope().ServiceProvider.GetRequiredService<IAxon>();
+        var orchestrator = _provider.CreateScope().ServiceProvider.GetRequiredService<IHikyaku>();
         var response = await orchestrator.SendObject(message);
         responseMsg = JsonConvert.SerializeObject(new ResponseMessage { Content = response, Status = StatusEnum.Ok },
           _options.SerializerSettings);
@@ -109,8 +107,8 @@ namespace Hikyaku.Kaido.GRPC
 
     private async Task ManageGenericAxonFlowNotification<T>(NotifyMessage request)
     {
-      var axon = _provider.CreateScope().ServiceProvider.GetRequiredService<IAxon>();
-      var router = axon as AxonFlow;
+      var kaido = _provider.CreateScope().ServiceProvider.GetRequiredService<IHikyaku>();
+      var router = kaido as Kaido;
       try
       {
         var msg = request.Body;
@@ -143,7 +141,7 @@ namespace Hikyaku.Kaido.GRPC
         var message = JsonConvert.DeserializeObject<T>(msg, _options.SerializerSettings);
 
         router?.StopPropagating();
-        await axon.PublishObject(message);
+        await kaido.PublishObject(message);
       }
       catch (Exception ex)
       {

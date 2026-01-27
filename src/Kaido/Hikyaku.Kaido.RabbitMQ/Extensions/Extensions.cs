@@ -8,6 +8,9 @@ using Axon;
 using Axon.Flow;
 using Hikyaku.Kaido.RabbitMQ;
 
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable CheckNamespace
+
 namespace Microsoft.Extensions.DependencyInjection
 {
   /// <summary>

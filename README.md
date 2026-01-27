@@ -1,17 +1,17 @@
-![Logo.png](assets/logo-250.png)
+![Logo.png](assets/Logo-128.png)
 
-[![NuGet](https://img.shields.io/nuget/dt/AxonFlow.svg)](https://www.nuget.org/packages/AxonFlow) 
-[![NuGet](https://img.shields.io/nuget/vpre/AxonFlow.svg)](https://www.nuget.org/packages/AxonFlow)
+[![NuGet](https://img.shields.io/nuget/dt/Hikyaku.svg)](https://www.nuget.org/packages/Hikyaku) 
+[![NuGet](https://img.shields.io/nuget/vpre/Hikyaku.svg)](https://www.nuget.org/packages/Hikyaku)
 
 
-AxonFlow is a open-source derivate work of [MediatR](https://github.com/jbogard/MediatR.Archive) version 12.5.0 
+Hikyaku is a open-source derivate work of [MediatR](https://github.com/jbogard/MediatR.Archive) version 12.5.0 
 with additions to transform message dispatching from in-process to Out-Of-Process messaging via RPC calls implemented with popular message dispatchers. 
 
 
 
-## When you need AxonFlow. 
+## When you need Hikyaku. 
 
-Axon is very good to implement some patterns like [CQRS](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs)
+Hikyaku is very good to implement some patterns like [CQRS](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs)
 
 Implementing CQRS in an in-process application does not bring to you all the power of the pattern but gives you the opportunity to have organized, easy to maintain code. When the application grow you may need to refactor your things to a microservices architecture.
 
@@ -23,31 +23,31 @@ AxonFlow provides you message dispatching behaviour and let you decide which cal
 
 ## Installation
 
-You should install [AxonFlow with NuGet](https://www.nuget.org/packages/AxonFlow)
+You should install [Hikyaku with NuGet](https://www.nuget.org/packages/AxonFlow)
 
-    Install-Package AxonFlow
+    Install-Package Hikyaku
 
 if you need out-of-process functions
 
-    Install-Package AxonFlow.Flow
+    Install-Package Hikyaku.Kaido
     
 Or via the .NET Core command line interface:
 
-    dotnet add package AxonFlow
-    dotnet add package AxonFlow.Flow
+    dotnet add package Hikyaku
+    dotnet add package Hikyaku.Kaido
 
 Either commands, from Package Manager Console or .NET Core CLI, will download and install AxonFlow and all required dependencies.
 
 
 ## Using Contracts-Only Package
-To reference only the contracts for AxonFlow, which includes:
+To reference only the contracts for Hikyaku, which includes:
 
 IRequest (including generic variants)
 INotification
 IStreamRequest
-Add a package reference to Axon-Contracts
+Add a package reference to Hikyaku-Contracts
 
-This package is useful in scenarios where your AxonFlow contracts are in a separate assembly/project from handlers. Example scenarios include:
+This package is useful in scenarios where your Hikyaku contracts are in a separate assembly/project from handlers. Example scenarios include:
 
 API contracts
 GRPC contracts
@@ -55,10 +55,10 @@ Blazor
 
 ## Basic Configuration using `IServiceCollection`
 
-Configuring AxonFlow is an easy task. 
-1) Add AxonFlow to services configuration via AddAxon extension method. this will register the Axon service that can be used for message dispatching. 
+Configuring Hikyaku is an easy task. 
+1) Add Hikyaku to services configuration via AddHikyaku extension method. this will register the Axon service that can be used for message dispatching. 
 
-Axon supports `Microsoft.Extensions.DependencyInjection.Abstractions` directly. To register various Axon services and handlers:
+Hikyaku supports `Microsoft.Extensions.DependencyInjection.Abstractions` directly. To register various Axon services and handlers:
 
 ```
 services.AddAxon(cfg => cfg.RegisterServicesFromAssemblyContaining<Startup>());

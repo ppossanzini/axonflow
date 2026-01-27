@@ -1,5 +1,6 @@
 using System;
-
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable CheckNamespace
 namespace Hikyaku.Kaido
 {
   /// <summary>

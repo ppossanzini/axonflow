@@ -14,11 +14,11 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Deterministic>true</Deterministic>
     <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
-    <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ppossanzini/hikyaku</RepositoryUrl>
     <PackageId>AxonFlow.Flow</PackageId>
     <PackageIcon>Logo-128.png</PackageIcon>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\AxonFlow.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\Hikyaku.snk</AssemblyOriginatorKeyFile>
     <AssemblyVersion>10.0.0</AssemblyVersion>
     <RootNamespace>Hikyaku.Kaido</RootNamespace>
   </PropertyGroup>
@@ -28,12 +28,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.2"/>
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.2"/>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
-<!--    <PackageReference Include="AxonFlow.Contracts" Version="[9.5.1,)" />-->
-<!--    <PackageReference Include="AxonFlow" Version="[9.5.0,)"/>-->
   </ItemGroup>
-  <ItemGroup><!--    <ProjectReference Include="..\..\Axon\Axon.Contracts\Axon.Contracts.csproj" />-->
-<!--    <ProjectReference Include="..\..\Axon\Axon\Axon.csproj" />-->
-  
+  <ItemGroup>
     <ProjectReference Include="..\..\Hikyaku\Hikyaku.Contracts\Hikyaku.Contracts.csproj" />
     <ProjectReference Include="..\..\Hikyaku\Hikyaku\Hikyaku.csproj" />
   </ItemGroup>

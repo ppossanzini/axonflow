@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Authors>Paolo Possanzini</Authors>
-    <Description>RPC extensions for AxonFlow via pipeline using gRPC</Description>
+    <Description>RPC extensions for Hikyaku via pipeline using gRPC</Description>
     <Copyright>Copyright Paolo Possanzini</Copyright>
     <Features>strict</Features>
     <PackageTags>mediator;request;response;queries;commands;notifications;rpc;grpc</PackageTags>
@@ -15,15 +15,15 @@
     <Deterministic>true</Deterministic>
     <TargetFrameworks>net8.0;</TargetFrameworks>
     <PackageIcon>Logo-128.png</PackageIcon>
-    <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ppossanzini/Hikyaku</RepositoryUrl>
 
-    <PackageId>AxonFlow.Flow.GRPC</PackageId>
+    <PackageId>Hikyaku.Kaido.GRPC</PackageId>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\AxonFlow.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\Hikyaku.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.25.2"/>
-    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.66.0"/>
+    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.76.0"/>
     <PackageReference Include="Newtonsoft.Json" Version="13.*"/>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.9" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2"/>
@@ -33,9 +33,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="AxonFlow.Flow" Version="[9.5.0,)" />
   </ItemGroup>
   <ItemGroup>
     <Protobuf Include="Protos\RequestsManager.proto" GrpcServices="Both"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hikyaku.Kaido\Hikyaku.Kaido.csproj" />
   </ItemGroup>
 </Project>

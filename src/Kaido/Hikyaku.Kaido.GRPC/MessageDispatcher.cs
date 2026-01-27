@@ -5,10 +5,8 @@ using Newtonsoft.Json;
 using System.Threading;
 using System;
 using System.Collections.Generic;
-using Axon;
-using Axon.Flow;
-using Axon.Flow.Messages;
 using Grpc.Net.Client;
+using Hikyaku.Kaido.Messages;
 using Microsoft.Extensions.DependencyInjection;
 
 // using OrchestratoR.Router.GRPC;
@@ -103,7 +101,7 @@ namespace Hikyaku.Kaido.GRPC
     /// <param name="request">The request message to send.</param>
     /// <param name="cancellationToken">A cancellation token to cancel the notification operation.</param>
     /// <returns>A task representing the asynchronous notification operation.</returns>
-    public Task Notify<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : MediatR.INotification
+    public Task Notify<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : INotification
     {
       var internalQueue = typeof(TRequest).AxonTypeName(routerOptions);
       // ReSharper disable once SuspiciousTypeConversion.Global

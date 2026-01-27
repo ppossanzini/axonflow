@@ -2,20 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Hikyaku.Kaido;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Hikyaku.Kaido
 {
   /// OrchestratorGateway class is a subclass of Orchestrator that adds additional functionality for remote request arbitration.
   /// /
-  public class Kaido : global::Hikyaku.Hikyaku
-  { 
+  public class Kaido : global::Hikyaku.Hikyaku, MediatR.IMediator
+  {
     private readonly IRouter _router;
     private readonly ILogger<Kaido> _logger;
     private bool _allowRemoteRequest = true;
-    
+
 
     public Kaido(IServiceProvider serviceProvider, IRouter router, ILogger<Kaido> logger) : base(serviceProvider)
     {
@@ -50,7 +48,7 @@ namespace Hikyaku.Kaido
       CancellationToken cancellationToken)
     {
       var not = notification;
-      
+
       try
       {
         if (_allowRemoteRequest)
@@ -59,7 +57,7 @@ namespace Hikyaku.Kaido
         }
         else
         {
-            await base.PublishCore(handlerExecutors, not, cancellationToken);
+          await base.PublishCore(handlerExecutors, not, cancellationToken);
         }
       }
       catch (Exception ex)
@@ -67,6 +65,21 @@ namespace Hikyaku.Kaido
         _logger.LogError(ex, ex.Message);
         throw;
       }
+    }
+
+    Task<TResponse> MediatR.ISender.Send<TResponse>(MediatR.IRequest<TResponse> request, CancellationToken cancellationToken)
+    {
+      return base.Send(request, cancellationToken);
+    }
+
+    Task MediatR.ISender.Send<TRequest>(TRequest request, CancellationToken cancellationToken)
+    {
+      return base.Send(request, cancellationToken);
+    }
+
+    IAsyncEnumerable<TResponse> MediatR.ISender.CreateStream<TResponse>(MediatR.IStreamRequest<TResponse> request, CancellationToken cancellationToken)
+    {
+      return base.CreateStream(request, cancellationToken);
     }
   }
 }

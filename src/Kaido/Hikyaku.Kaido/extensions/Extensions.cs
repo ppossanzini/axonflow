@@ -9,7 +9,8 @@ using Hikyaku.Kaido;
 using Microsoft.Extensions.Logging;
 
 // ReSharper disable AssignNullToNotNullAttribute
-
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
 {
   /// <summary>

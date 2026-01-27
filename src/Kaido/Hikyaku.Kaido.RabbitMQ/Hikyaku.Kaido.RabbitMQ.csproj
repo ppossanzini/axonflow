@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Authors>Paolo Possanzini</Authors>
-    <Description>RPC extensions for AxonFlow via pipeline using RabbitMQ</Description>
+    <Description>RPC extensions for Hikyaku via pipeline using RabbitMQ</Description>
     <Copyright>Copyright Paolo Possanzini</Copyright>
     <Features>strict</Features>
     <PackageTags>mediator;request;response;queries;commands;notifications;rpc;rabbitmq</PackageTags>
@@ -15,11 +15,11 @@
     <Deterministic>true</Deterministic>
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
     <PackageIcon>Logo-128.png</PackageIcon>
-    <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ppossanzini/Hikyaku</RepositoryUrl>
 
-    <PackageId>AxonFlow.Flow.RabbitMQ</PackageId>
+    <PackageId>Hikyaku.Kaido.RabbitMQ</PackageId>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\AxonFlow.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\Hikyaku.snk</AssemblyOriginatorKeyFile>
     <AssemblyVersion>10.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>

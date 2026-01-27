@@ -46,7 +46,7 @@ public static class ServiceRegistrar
   /// An instance of <see cref="HikyakuServiceConfiguration"/> that provides the configuration settings
   /// for service registration, including lifetime, type evaluator, and other constraints.
   /// </param>
-  [Obsolete("Use AddAxonClassesWithTimeout instead", false)]
+  [Obsolete("Use AddHikyakuClassesWithTimeout instead", false)]
   public static void AddMediatRClassesWithTimeout(IServiceCollection services, HikyakuServiceConfiguration configuration)
   {
     AddHikyakuClassesWithTimeout(services, configuration); 
@@ -94,7 +94,7 @@ public static class ServiceRegistrar
   /// An optional <see cref="CancellationToken"/> used to observe and handle cancellation during the registration process.
   /// Defaults to <see cref="CancellationToken.None"/> if not provided.
   /// </param>
-  [Obsolete("Use AddAxonClasses instead", false)]
+  [Obsolete("Use AddHikyakuClasses instead", false)]
   public static void AddMediatRClasses(IServiceCollection services, HikyakuServiceConfiguration configuration,
     CancellationToken cancellationToken = default)
   {
@@ -119,15 +119,15 @@ public static class ServiceRegistrar
 
     ConnectImplementationsToTypesClosing(typeof(MediatR.IRequestHandler<,>), services, assembliesToScan, false, configuration, cancellationToken);
     ConnectImplementationsToTypesClosing(typeof(MediatR.IRequestHandler<>), services, assembliesToScan, false, configuration, cancellationToken);
-    ConnectImplementationsToTypesClosing(typeof(MediatR.INotificationHandler<>), services, assembliesToScan, true, configuration);
-    ConnectImplementationsToTypesClosing(typeof(MediatR.IStreamRequestHandler<,>), services, assembliesToScan, false, configuration);
-    ConnectImplementationsToTypesClosing(typeof(IRequestExceptionHandler<,,>), services, assembliesToScan, true, configuration);
-    ConnectImplementationsToTypesClosing(typeof(IRequestExceptionAction<,>), services, assembliesToScan, true, configuration);
+    ConnectImplementationsToTypesClosing(typeof(MediatR.INotificationHandler<>), services, assembliesToScan, true, configuration, cancellationToken);
+    ConnectImplementationsToTypesClosing(typeof(MediatR.IStreamRequestHandler<,>), services, assembliesToScan, false, configuration, cancellationToken);
+    ConnectImplementationsToTypesClosing(typeof(IRequestExceptionHandler<,,>), services, assembliesToScan, true, configuration, cancellationToken);
+    ConnectImplementationsToTypesClosing(typeof(IRequestExceptionAction<,>), services, assembliesToScan, true, configuration, cancellationToken);
 
     if (configuration.AutoRegisterRequestProcessors)
     {
-      ConnectImplementationsToTypesClosing(typeof(IRequestPreProcessor<>), services, assembliesToScan, true, configuration);
-      ConnectImplementationsToTypesClosing(typeof(IRequestPostProcessor<,>), services, assembliesToScan, true, configuration);
+      ConnectImplementationsToTypesClosing(typeof(IRequestPreProcessor<>), services, assembliesToScan, true, configuration, cancellationToken);
+      ConnectImplementationsToTypesClosing(typeof(IRequestPostProcessor<,>), services, assembliesToScan, true, configuration, cancellationToken);
     }
 
     var multiOpenInterfaces = new List<Type>

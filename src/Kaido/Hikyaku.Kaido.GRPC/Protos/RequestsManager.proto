@@ -1,7 +1,7 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
 
-package Axon.Flow.GRPC;
+package Hikyaku.Kaido.GRPC;
 
 service GrpcServices{
   rpc ManageAxonFlowMessage(RequestMessage) returns (MessageResponse);

@@ -6,10 +6,7 @@ using System.Diagnostics;
 using Confluent.Kafka;
 using System.Threading.Tasks;
 using System;
-using Axon.Flow.Messages;
 using System.Threading;
-using Axon;
-using Axon.Flow;
 using Microsoft.Extensions.DependencyInjection;
 
 

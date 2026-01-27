@@ -20,7 +20,7 @@
     <RepositoryUrl>https://github.com/ppossanzini/Hikyaku</RepositoryUrl>
     <PackageId>Hikyaku.Kaido.Stats</PackageId>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\AxonFlow.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\Hikyaku.snk</AssemblyOriginatorKeyFile>
     <AssemblyVersion>10.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>

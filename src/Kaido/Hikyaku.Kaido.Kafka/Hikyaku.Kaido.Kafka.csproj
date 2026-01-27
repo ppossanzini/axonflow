@@ -16,11 +16,11 @@
     <Deterministic>true</Deterministic>
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
 
-    <RepositoryUrl>https://github.com/ppossanzini/AxonFlow</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ppossanzini/Hikyaku</RepositoryUrl>
     <PackageIcon>Logo-128.png</PackageIcon>
     <PackageId>AxonFlow.Flow.Kafka</PackageId>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\AxonFlow.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\Hikyaku.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,6 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Keryx.Flow\Keryx.Flow.csproj"/>
+    
   </ItemGroup>
 </Project>
