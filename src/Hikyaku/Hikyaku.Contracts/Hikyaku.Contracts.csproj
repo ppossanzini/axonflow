@@ -17,13 +17,21 @@
     <RootNamespace>Hikyaku</RootNamespace>
     <LangVersion>10</LangVersion>
     <PackageId>Hikyaku.Contracts</PackageId>
-    <PackageIcon>Logo-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/ppossanzini/Hikyaku</RepositoryUrl>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\Hikyaku.snk</AssemblyOriginatorKeyFile>
+    <PackageIcon>Logo-128.png</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.9" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Logo-128.png" />
+    <None Include="..\..\..\assets\Logo-128.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+      <Link>Logo-128.png</Link>
+    </None>
   </ItemGroup>
 </Project>
